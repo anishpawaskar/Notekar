@@ -10,7 +10,7 @@ export const NoteFormModalButton = ({
   }, []);
 
   return (
-    <div className="w-[600px] m-auto mt-4">
+    <div className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] m-auto mt-4 ">
       <input
         type="text"
         onChange={(e) => openModalOnInput(e)}

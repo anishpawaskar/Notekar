@@ -22,23 +22,38 @@ export const NoteForm = () => {
     }
   };
 
-  const handleTitleChange = (value) => {
-    setTitle(value);
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
   };
 
-  const handleDescriptionChange = (value) => {
-    setDescription(value);
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
   };
 
   const saveNote = () => {
     if (title || description) {
-      //should push with data
+      fetch('http://localhost:3000/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: title,
+          description: description,
+          states: {
+            isDeleted: false,
+          },
+        }),
+      })
+        .then((res) => res.json())
+        .then((d) => {
+          console.log('response from server', d);
+        });
       setIsModalOpen(false);
       setDescription('');
       noteFormDescriptionRef.current.value = '';
-    } else {
-      setIsModalOpen(false);
     }
+    setIsModalOpen(false);
   };
 
   if (!isModalOpen) {

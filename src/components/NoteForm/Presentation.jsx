@@ -18,18 +18,18 @@ export const NoteFormPresentation = ({
         onClick={saveNote}
         className="w-full h-full absolute top-0 left-0 z-10"
       />
-      <div className="max-w-[600px] m-auto mt-4 rounded shadow-lg p-3 border relative z-30 flex flex-col gap-4">
+      <div className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] m-auto mt-4 rounded shadow-lg p-3 border relative z-30 flex flex-col gap-4">
         <div className="w-full flex flex-col gap-4">
           <input
             ref={noteFormTitleRef}
-            onChange={(e) => handleTitleChange(e.target.value)}
+            onChange={(e) => handleTitleChange(e)}
             type="text"
             className="h-5 focus:outline-none font-medium text-base"
             placeholder="Title"
           />
           <input
             ref={noteFormDescriptionRef}
-            onChange={(e) => handleDescriptionChange(e.target.value)}
+            onChange={(e) => handleDescriptionChange(e)}
             className="h-5 focus:outline-none text-sm"
             type="text"
             value={description}
