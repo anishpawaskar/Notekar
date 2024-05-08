@@ -70,6 +70,12 @@ export const NoteForm = () => {
     setIsModalOpen(false);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      noteFormDescriptionRef.current.focus();
+    }
+  };
+
   if (!isModalOpen) {
     return (
       <NoteFormModalButton
@@ -88,6 +94,7 @@ export const NoteForm = () => {
       description={description}
       noteFormTitleRef={noteFormTitleRef}
       noteFormDescriptionRef={noteFormDescriptionRef}
+      handleKeyDown={handleKeyDown}
     />
   );
 };

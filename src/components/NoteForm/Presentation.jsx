@@ -7,6 +7,7 @@ export const NoteFormPresentation = ({
   description,
   noteFormDescriptionRef,
   noteFormTitleRef,
+  handleKeyDown,
 }) => {
   useEffect(() => {
     noteFormDescriptionRef.current.focus();
@@ -23,6 +24,7 @@ export const NoteFormPresentation = ({
           <input
             ref={noteFormTitleRef}
             onChange={(e) => handleTitleChange(e)}
+            onKeyDown={(e) => handleKeyDown(e)}
             type="text"
             className="h-5 focus:outline-none font-medium text-base"
             placeholder="Title"
