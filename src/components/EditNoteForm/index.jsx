@@ -1,9 +1,11 @@
 import { useState, useRef } from 'react';
 import { EditNoteFormPresentation } from './Presentation';
-import { useSelector } from 'react-redux';
-import { selectNotes } from '../../app/slices/notesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectNotes, updateNote } from '../../app/slices/notesSlice';
+import { useParams } from 'react-router-dom';
 
-export const EditNoteForm = ({ noteId, saveNote }) => {
+export const EditNoteForm = () => {
+  const { noteId } = useParams();
   const notes = useSelector(selectNotes);
   const note = notes.find((note) => note.id === noteId);
 
@@ -12,6 +14,8 @@ export const EditNoteForm = ({ noteId, saveNote }) => {
 
   const noteFormTitleRef = useRef(null);
   const noteFormDescriptionRef = useRef(null);
+
+  const dispatch = useDispatch();
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -24,6 +28,23 @@ export const EditNoteForm = ({ noteId, saveNote }) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       noteFormDescriptionRef.current.focus();
+    }
+  };
+
+  const saveNote = () => {
+    if (title || description) {
+      dispatch(
+        updateNote({
+          noteId,
+          propertyToUpdate: {
+            title,
+            description,
+            states: {
+              isDeleted: false,
+            },
+          },
+        }),
+      );
     }
   };
 

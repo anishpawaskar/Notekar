@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 
 export const NoteFormPresentation = ({
   handleDescriptionChange,
@@ -47,6 +48,7 @@ export const NoteFormPresentation = ({
           </button>
         </div>
       </div>
+      <Outlet />
     </>
   );
 };

@@ -1,9 +1,10 @@
+import { Outlet } from 'react-router-dom';
 import { EditNoteForm } from '../EditNoteForm';
 import { NoteCard } from './components/NoteCard';
 
-export const NotesPresentation = ({ notes, noteId, noteHandler, saveNote }) => {
+export const NotesPresentation = ({ notes }) => {
   const notesList = notes.map((note) => {
-    return <NoteCard note={note} key={note.id} noteHandler={noteHandler} />;
+    return <NoteCard note={note} key={note.id} />;
   });
 
   return (
@@ -12,7 +13,7 @@ export const NotesPresentation = ({ notes, noteId, noteHandler, saveNote }) => {
         <h2 className="text-center">Write down your thoughts!</h2>
       )}
       {notesList}
-      {noteId && <EditNoteForm noteId={noteId} saveNote={saveNote} />}
+      <Outlet />
     </div>
   );
 };

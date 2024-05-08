@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export const EditNoteFormPresentation = ({
   handleTitleChange,
   handleKeyDown,
@@ -10,10 +12,12 @@ export const EditNoteFormPresentation = ({
 }) => {
   return (
     <>
-      <div
-        onClick={() => saveNote(title, description)}
-        className="w-full h-full absolute top-0 left-0 z-10 bg-[#79797B] opacity-[0.6]"
-      />
+      <Link to="/">
+        <div
+          onClick={saveNote}
+          className="w-full h-full absolute top-0 left-0 z-10 bg-[#79797B] opacity-[0.6]"
+        />
+      </Link>
       <div className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] absolute left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]  mt-4 rounded shadow-lg p-3 border z-30 flex flex-col gap-4 bg-white">
         <div className="w-full flex flex-col gap-4">
           <input
@@ -35,12 +39,14 @@ export const EditNoteFormPresentation = ({
           />
         </div>
         <div className="w-full flex justify-end">
-          <button
-            onClick={() => saveNote(title, description)}
-            className="px-6 py-[6px] hover:bg-[--hover-color] rounded text-sm"
-          >
-            Close
-          </button>
+          <Link to="/">
+            <button
+              onClick={saveNote}
+              className="px-6 py-[6px] hover:bg-[--hover-color] rounded text-sm"
+            >
+              Close
+            </button>
+          </Link>
         </div>
       </div>
     </>
