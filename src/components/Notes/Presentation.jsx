@@ -1,8 +1,9 @@
-import { NoteCard } from './components/noteCard';
+import { EditNoteForm } from '../EditNoteForm';
+import { NoteCard } from './components/NoteCard';
 
-export const NotesPresentation = ({ notes }) => {
+export const NotesPresentation = ({ notes, noteId, noteHandler, saveNote }) => {
   const notesList = notes.map((note) => {
-    return <NoteCard note={note} />;
+    return <NoteCard note={note} key={note.id} noteHandler={noteHandler} />;
   });
 
   return (
@@ -11,6 +12,7 @@ export const NotesPresentation = ({ notes }) => {
         <h2 className="text-center">Write down your thoughts!</h2>
       )}
       {notesList}
+      {noteId && <EditNoteForm noteId={noteId} saveNote={saveNote} />}
     </div>
   );
 };

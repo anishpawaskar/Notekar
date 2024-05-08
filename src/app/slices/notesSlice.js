@@ -29,10 +29,15 @@ const notesSlice = createSlice({
         });
       }
     },
+    updateNote: (state, { payload: { noteId, propertyToUpdate } }) => {
+      state.notes = state.notes.map((note) =>
+        note.id === noteId ? { ...note, ...propertyToUpdate } : note,
+      );
+    },
   },
 });
 
-export const { addNote } = notesSlice.actions;
+export const { addNote, updateNote } = notesSlice.actions;
 export const selectNotes = (state) => state.notes.notes;
 
 export default notesSlice.reducer;

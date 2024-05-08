@@ -62,7 +62,6 @@ export const NoteForm = () => {
           },
         }),
       );
-      console.log(notes);
       setIsModalOpen(false);
       setDescription('');
       noteFormDescriptionRef.current.value = '';
