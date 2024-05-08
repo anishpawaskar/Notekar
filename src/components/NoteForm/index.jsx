@@ -1,11 +1,15 @@
 import { useRef, useState } from 'react';
 import { NoteFormModalButton } from './ModalButton';
 import { NoteFormPresentation } from './Presentation';
+import { useDispatch } from 'react-redux';
+import { addNote } from '../../app/slices/notesSlice';
 
 export const NoteForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  const dispatch = useDispatch();
 
   const noteFormModalButtonRef = useRef(null);
   const noteFormTitleRef = useRef(null);
@@ -32,23 +36,33 @@ export const NoteForm = () => {
 
   const saveNote = () => {
     if (title || description) {
-      fetch('http://localhost:3000/notes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: title,
-          description: description,
+      // fetch('http://localhost:3000/notes', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     title: title,
+      //     description: description,
+      //     states: {
+      //       isDeleted: false,
+      //     },
+      //   }),
+      // })
+      //   .then((res) => res.json())
+      //   .then((d) => {
+      //     console.log('response from server', d);
+      //   });
+      dispatch(
+        addNote({
+          title,
+          description,
           states: {
             isDeleted: false,
           },
         }),
-      })
-        .then((res) => res.json())
-        .then((d) => {
-          console.log('response from server', d);
-        });
+      );
+      console.log(notes);
       setIsModalOpen(false);
       setDescription('');
       noteFormDescriptionRef.current.value = '';
