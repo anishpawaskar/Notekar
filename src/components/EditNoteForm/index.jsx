@@ -1,19 +1,26 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { EditNoteFormPresentation } from './Presentation';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectNotes, updateNote } from '../../app/slices/notesSlice';
 import { useParams } from 'react-router-dom';
+import { useGetNoteQuery } from '../../app/services/api';
 
 export const EditNoteForm = () => {
   const { noteId } = useParams();
-  const notes = useSelector(selectNotes);
-  const note = notes.find((note) => note.id === noteId);
+  const { data, isLoading } = useGetNoteQuery(noteId);
 
-  const [title, setTitle] = useState(note.title ?? '');
-  const [description, setDescription] = useState(note.description ?? '');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const noteFormTitleRef = useRef(null);
   const noteFormDescriptionRef = useRef(null);
+
+  useEffect(() => {
+    if (!isLoading && data?.note) {
+      setTitle(data.note.title ?? '');
+      setDescription(data.note.description ?? '');
+    }
+  }, [data, isLoading]);
 
   const dispatch = useDispatch();
 
@@ -47,6 +54,10 @@ export const EditNoteForm = () => {
       );
     }
   };
+
+  if (isLoading) {
+    return <h1 className="mt-4 text-center">Loading....</h1>;
+  }
 
   return (
     <EditNoteFormPresentation

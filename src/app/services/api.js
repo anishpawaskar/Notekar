@@ -18,7 +18,13 @@ export const api = createApi({
       }),
       invalidatesTags: ['Note'],
     }),
+    getNote: builder.query({
+      query: (noteId) => {
+        return `/notes/${noteId}`;
+      },
+    }),
   }),
 });
 
-export const { useGetNotesQuery, useAddNewNoteMutation } = api;
+export const { useGetNotesQuery, useGetNoteQuery, useAddNewNoteMutation } = api;
+
