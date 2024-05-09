@@ -1,13 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { EditNoteFormPresentation } from './Presentation';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectNotes, updateNote } from '../../app/slices/notesSlice';
 import { useParams } from 'react-router-dom';
-import { useGetNoteQuery } from '../../app/services/api';
+import { useGetNoteQuery, useUpdateNoteMutation } from '../../app/services/api';
 
 export const EditNoteForm = () => {
   const { noteId } = useParams();
   const { data, isLoading } = useGetNoteQuery(noteId);
+  const [updateNote] = useUpdateNoteMutation();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -21,8 +20,6 @@ export const EditNoteForm = () => {
       setDescription(data.note.description ?? '');
     }
   }, [data, isLoading]);
-
-  const dispatch = useDispatch();
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -38,20 +35,23 @@ export const EditNoteForm = () => {
     }
   };
 
-  const saveNote = () => {
-    if (title || description) {
-      dispatch(
+  const saveNote = async () => {
+    console.log('title', title);
+    try {
+      if (title || description) {
         updateNote({
           noteId,
-          propertyToUpdate: {
+          body: {
             title,
             description,
             states: {
               isDeleted: false,
             },
           },
-        }),
-      );
+        }).unwrap();
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
