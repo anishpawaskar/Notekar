@@ -4,9 +4,11 @@ const BASE_URL = 'http://localhost:3000';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
+  tagTypes: ['Note'],
   endpoints: (builder) => ({
     getNotes: builder.query({
       query: () => '/notes',
+      providesTags: ['Note'],
     }),
     addNewNote: builder.mutation({
       query: (body) => ({
@@ -14,6 +16,7 @@ export const api = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Note'],
     }),
   }),
 });
