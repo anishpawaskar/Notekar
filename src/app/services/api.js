@@ -8,7 +8,13 @@ export const api = createApi({
     getNotes: builder.query({
       query: () => '/notes',
     }),
+    getNote: builder.query({
+      query: (noteId) => {
+        console.log('request coming', noteId);
+        return `/notes/${noteId}`;
+      },
+    }),
   }),
 });
 
-export const { useGetNotesQuery } = api;
+export const { useGetNotesQuery, useGetNoteQuery } = api;
