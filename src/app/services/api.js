@@ -23,7 +23,24 @@ export const api = createApi({
       }),
       invalidatesTags: ['Note'],
     }),
+    updateNote: builder.mutation({
+      query: ({ noteId, body }) => {
+        console.log('noteId', noteId);
+        console.log('body', body);
+        return {
+          url: `/notes/${noteId}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: ['Note'],
+    }),
   }),
 });
 
-export const { useGetNotesQuery, useGetNoteQuery, useAddNewNoteMutation } = api;
+export const {
+  useGetNotesQuery,
+  useGetNoteQuery,
+  useAddNewNoteMutation,
+  useUpdateNoteMutation,
+} = api;
