@@ -25,8 +25,6 @@ export const api = createApi({
     }),
     updateNote: builder.mutation({
       query: ({ noteId, body }) => {
-        console.log('noteId', noteId);
-        console.log('body', body);
         return {
           url: `/notes/${noteId}`,
           method: 'PUT',
