@@ -1,15 +1,14 @@
 import { useRef, useState } from 'react';
 import { NoteFormModalButton } from './ModalButton';
 import { NoteFormPresentation } from './Presentation';
-import { useDispatch } from 'react-redux';
-import { addNote } from '../../app/slices/notesSlice';
+import { useAddNewNoteMutation } from '../../app/services/api';
 
 export const NoteForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const dispatch = useDispatch();
+  const [addNewNote] = useAddNewNoteMutation();
 
   const noteFormModalButtonRef = useRef(null);
   const noteFormTitleRef = useRef(null);
@@ -34,39 +33,23 @@ export const NoteForm = () => {
     setDescription(e.target.value);
   };
 
-  const saveNote = () => {
-    if (title || description) {
-      // fetch('http://localhost:3000/notes', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     title: title,
-      //     description: description,
-      //     states: {
-      //       isDeleted: false,
-      //     },
-      //   }),
-      // })
-      //   .then((res) => res.json())
-      //   .then((d) => {
-      //     console.log('response from server', d);
-      //   });
-      dispatch(
-        addNote({
+  const saveNote = async () => {
+    try {
+      if (title || description) {
+        await addNewNote({
           title,
           description,
-          states: {
-            isDeleted: false,
-          },
-        }),
-      );
+          states: { isDeleted: false },
+        }).unwrap();
+        setTitle('');
+        setDescription('');
+        setIsModalOpen(false);
+        noteFormDescriptionRef.current.value = '';
+      }
       setIsModalOpen(false);
-      setDescription('');
-      noteFormDescriptionRef.current.value = '';
+    } catch (err) {
+      console.error(err);
     }
-    setIsModalOpen(false);
   };
 
   const handleKeyDown = (e) => {
