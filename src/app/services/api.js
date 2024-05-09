@@ -8,7 +8,14 @@ export const api = createApi({
     getNotes: builder.query({
       query: () => '/notes',
     }),
+    addNewNote: builder.mutation({
+      query: (body) => ({
+        url: '/notes',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetNotesQuery } = api;
+export const { useGetNotesQuery, useAddNewNoteMutation } = api;
