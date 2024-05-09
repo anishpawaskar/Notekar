@@ -36,7 +36,6 @@ export const EditNoteForm = () => {
   };
 
   const saveNote = async () => {
-    console.log('title', title);
     try {
       if (title || description) {
         updateNote({
