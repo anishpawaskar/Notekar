@@ -10,6 +10,11 @@ export const api = createApi({
       query: () => '/notes',
       providesTags: ['Note'],
     }),
+    getNote: builder.query({
+      query: (noteId) => ({
+        url: `/notes/${noteId}`,
+      }),
+    }),
     addNewNote: builder.mutation({
       query: (body) => ({
         url: '/notes',
@@ -18,13 +23,7 @@ export const api = createApi({
       }),
       invalidatesTags: ['Note'],
     }),
-    getNote: builder.query({
-      query: (noteId) => {
-        return `/notes/${noteId}`;
-      },
-    }),
   }),
 });
 
 export const { useGetNotesQuery, useGetNoteQuery, useAddNewNoteMutation } = api;
-
