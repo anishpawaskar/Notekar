@@ -54,6 +54,24 @@ export const EditNoteForm = () => {
     }
   };
 
+  const handleActions = async (action) => {
+    switch (action) {
+      case 'delete': {
+        await updateNote({
+          noteId,
+          body: {
+            states: {
+              isDeleted: true,
+            },
+          },
+        }).unwrap();
+      }
+
+      default:
+        return action;
+    }
+  };
+
   if (isLoading) {
     return <h1 className="mt-4 text-center">Loading....</h1>;
   }
@@ -68,6 +86,7 @@ export const EditNoteForm = () => {
       description={description}
       noteFormTitleRef={noteFormTitleRef}
       noteFormDescriptionRef={noteFormDescriptionRef}
+      handleActions={handleActions}
     />
   );
 };
