@@ -1,12 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import { EditNoteFormPresentation } from './Presentation';
 import { useParams } from 'react-router-dom';
-import { useGetNoteQuery, useUpdateNoteMutation } from '../../app/services/api';
+import {
+  useDeleteNoteMutation,
+  useGetNoteQuery,
+  useUpdateNoteMutation,
+} from '../../app/services/api';
 
 export const EditNoteForm = () => {
   const { noteId } = useParams();
   const { data, isLoading } = useGetNoteQuery(noteId);
   const [updateNote] = useUpdateNoteMutation();
+  const [deleteNote] = useDeleteNoteMutation();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -57,14 +62,7 @@ export const EditNoteForm = () => {
   const handleActions = async (action) => {
     switch (action) {
       case 'delete': {
-        await updateNote({
-          noteId,
-          body: {
-            states: {
-              isDeleted: true,
-            },
-          },
-        }).unwrap();
+        await deleteNote(noteId).unwrap();
       }
 
       default:
