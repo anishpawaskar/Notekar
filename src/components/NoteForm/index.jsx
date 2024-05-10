@@ -71,8 +71,6 @@ export const NoteForm = () => {
     }
   };
 
-  console.log('archive value', isNoteArchived.current);
-
   if (!isModalOpen) {
     return (
       <NoteFormModalButton
