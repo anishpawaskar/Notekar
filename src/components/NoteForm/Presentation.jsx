@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { NotesActions } from '../NotesActions';
 
 export const NoteFormPresentation = ({
   handleDescriptionChange,
@@ -9,6 +10,7 @@ export const NoteFormPresentation = ({
   noteFormDescriptionRef,
   noteFormTitleRef,
   handleKeyDown,
+  notesActions,
 }) => {
   useEffect(() => {
     noteFormDescriptionRef.current.focus();
@@ -39,7 +41,8 @@ export const NoteFormPresentation = ({
             placeholder="Take a note..."
           />
         </div>
-        <div className="w-full flex justify-end">
+        <div className="w-full flex justify-between items-center">
+          <NotesActions notesActions={notesActions} />
           <button
             onClick={saveNote}
             className="px-6 py-[6px] hover:bg-[--hover-color] rounded text-sm"

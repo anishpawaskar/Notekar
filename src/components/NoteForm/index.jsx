@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { NoteFormModalButton } from './ModalButton';
 import { NoteFormPresentation } from './Presentation';
 import { useAddNewNoteMutation } from '../../app/services/api';
+import { NOTES_FORM_ACTIONS } from '../NotesActions/NotesActionsConstants';
 
 export const NoteForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -77,6 +78,7 @@ export const NoteForm = () => {
       noteFormTitleRef={noteFormTitleRef}
       noteFormDescriptionRef={noteFormDescriptionRef}
       handleKeyDown={handleKeyDown}
+      notesActions={NOTES_FORM_ACTIONS}
     />
   );
 };
