@@ -83,6 +83,10 @@ export const NoteForm = () => {
     setIsColorPaletteVisible(false);
   };
 
+  const colorHandler = (color) => {
+    setBgColor(color);
+  };
+
   if (!isModalOpen) {
     return (
       <NoteFormModalButton
@@ -106,6 +110,8 @@ export const NoteForm = () => {
       handleActions={handleActions}
       isColorPaletteVisible={isColorPaletteVisible}
       closeColorPalette={closeColorPalette}
+      bgColor={bgColor}
+      colorHandler={colorHandler}
     />
   );
 };

@@ -1,15 +1,22 @@
 import defaultColorIcon from './assets/default-color-icon.png';
 
-export const ColorPalettePresentation = ({ colors, closeColorPalette }) => {
-  const colorList = colors.map((color) => {
+export const ColorPalettePresentation = ({
+  colors,
+  closeColorPalette,
+  colorHandler,
+}) => {
+  const colorList = colors.map((color, idx) => {
     const liClassName =
       color.name === 'Default'
         ? 'h-8 w-8 rounded-full flex items-center justify-center border'
         : 'h-8 w-8 rounded-full';
     return (
-      <li style={{ background: color.color }} className={liClassName}>
+      <li key={idx} style={{ background: color.color }} className={liClassName}>
         {color.name === 'Default' ? (
-          <button className="h-full w-full rounded-full">
+          <button
+            onClick={() => colorHandler(color.color)}
+            className="h-full w-full rounded-full"
+          >
             <img
               className="m-0 h-full"
               src={defaultColorIcon}
@@ -17,7 +24,10 @@ export const ColorPalettePresentation = ({ colors, closeColorPalette }) => {
             />
           </button>
         ) : (
-          <button className="h-full w-full rounded-full"></button>
+          <button
+            onClick={() => colorHandler(color.color)}
+            className="h-full w-full rounded-full"
+          ></button>
         )}
       </li>
     );
