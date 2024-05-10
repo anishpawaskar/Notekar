@@ -8,6 +8,8 @@ export const NoteForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
+  const [bgColor, setBgColor] = useState('#fff');
 
   const [addNewNote] = useAddNewNoteMutation();
 
@@ -45,10 +47,12 @@ export const NoteForm = () => {
         }).unwrap();
         setTitle('');
         setDescription('');
-        setIsModalOpen(false);
         noteFormDescriptionRef.current.value = '';
+        setIsColorPaletteVisible(false);
+        setIsModalOpen(false);
       }
       setIsModalOpen(false);
+      setIsColorPaletteVisible(false);
     } catch (err) {
       console.error(err);
     }
@@ -68,7 +72,15 @@ export const NoteForm = () => {
           await saveNote();
         }
       }
+
+      case 'changeBackground': {
+        setIsColorPaletteVisible(true);
+      }
     }
+  };
+
+  const closeColorPalette = () => {
+    setIsColorPaletteVisible(false);
   };
 
   if (!isModalOpen) {
@@ -92,6 +104,8 @@ export const NoteForm = () => {
       handleKeyDown={handleKeyDown}
       notesActions={NOTES_FORM_ACTIONS}
       handleActions={handleActions}
+      isColorPaletteVisible={isColorPaletteVisible}
+      closeColorPalette={closeColorPalette}
     />
   );
 };

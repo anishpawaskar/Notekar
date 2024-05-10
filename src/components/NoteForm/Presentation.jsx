@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { NotesActions } from '../NotesActions';
+import { ColorPalette } from '../ColorPalette';
 
 export const NoteFormPresentation = ({
   handleDescriptionChange,
@@ -12,6 +13,8 @@ export const NoteFormPresentation = ({
   handleKeyDown,
   notesActions,
   handleActions,
+  isColorPaletteVisible,
+  closeColorPalette,
 }) => {
   useEffect(() => {
     noteFormDescriptionRef.current.focus();
@@ -42,6 +45,9 @@ export const NoteFormPresentation = ({
             placeholder="Take a note..."
           />
         </div>
+        {isColorPaletteVisible && (
+          <ColorPalette closeColorPalette={closeColorPalette} />
+        )}
         <div className="w-full flex justify-between items-center">
           <NotesActions
             notesActions={notesActions}
