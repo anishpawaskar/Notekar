@@ -8,7 +8,7 @@ export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
           <>
             <label htmlFor="upload">
               <img
-                className="h-4 hover:scale-125"
+                className="h-[1.12rem] hover:scale-125"
                 src={action.imgUrl}
                 alt={action.name}
               />
@@ -24,7 +24,7 @@ export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
           <Link to="/">
             <button onClick={() => handleActions(action.actionType)}>
               <img
-                className="h-4 hover:scale-125"
+                className="h-[1.12rem] hover:scale-125"
                 src={action.imgUrl}
                 alt={action.name}
               />
@@ -34,5 +34,5 @@ export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
       </div>
     );
   });
-  return <div>{actions}</div>;
+  return <div className="flex gap-3 items-center">{actions}</div>;
 };
