@@ -2,9 +2,7 @@ import { Link } from 'react-router-dom';
 import { NotesActions } from '../NotesActions';
 
 export const EditNoteFormPresentation = ({
-  handleTitleChange,
   handleKeyDown,
-  handleDescriptionChange,
   saveNote,
   title,
   description,
@@ -23,20 +21,18 @@ export const EditNoteFormPresentation = ({
       <div className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] absolute left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]  mt-4 rounded shadow-lg p-3 border z-30 flex flex-col gap-4 bg-white">
         <div className="w-full flex flex-col gap-4">
           <input
+            defaultValue={title}
             ref={noteFormTitleRef}
-            onChange={(e) => handleTitleChange(e)}
             onKeyDown={(e) => handleKeyDown(e)}
             type="text"
             className="h-5 focus:outline-none font-medium text-base"
-            value={title}
             placeholder="Title"
           />
           <input
+            defaultValue={description}
             ref={noteFormDescriptionRef}
-            onChange={(e) => handleDescriptionChange(e)}
             className="h-5 focus:outline-none text-sm"
             type="text"
-            value={description}
             placeholder="Take a note..."
           />
         </div>
