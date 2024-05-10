@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { NotesActions } from '../NotesActions';
 
 export const EditNoteFormPresentation = ({
   handleTitleChange,
@@ -9,6 +10,7 @@ export const EditNoteFormPresentation = ({
   description,
   noteFormTitleRef,
   noteFormDescriptionRef,
+  handleActions,
 }) => {
   return (
     <>
@@ -38,7 +40,8 @@ export const EditNoteFormPresentation = ({
             placeholder="Take a note..."
           />
         </div>
-        <div className="w-full flex justify-end">
+        <div className="w-full flex justify-between items-center">
+          <NotesActions handleActions={handleActions} />
           <Link to="/">
             <button
               onClick={saveNote}

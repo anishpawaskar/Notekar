@@ -10,6 +10,11 @@ export const api = createApi({
       query: () => '/notes',
       providesTags: ['Note'],
     }),
+    getNote: builder.query({
+      query: (noteId) => ({
+        url: `/notes/${noteId}`,
+      }),
+    }),
     addNewNote: builder.mutation({
       query: (body) => ({
         url: '/notes',
@@ -18,13 +23,22 @@ export const api = createApi({
       }),
       invalidatesTags: ['Note'],
     }),
-    getNote: builder.query({
-      query: (noteId) => {
-        return `/notes/${noteId}`;
+    updateNote: builder.mutation({
+      query: ({ noteId, body }) => {
+        return {
+          url: `/notes/${noteId}`,
+          method: 'PUT',
+          body,
+        };
       },
+      invalidatesTags: ['Note'],
     }),
   }),
 });
 
-export const { useGetNotesQuery, useGetNoteQuery, useAddNewNoteMutation } = api;
-
+export const {
+  useGetNotesQuery,
+  useGetNoteQuery,
+  useAddNewNoteMutation,
+  useUpdateNoteMutation,
+} = api;
