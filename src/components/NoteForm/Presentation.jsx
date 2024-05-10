@@ -11,6 +11,7 @@ export const NoteFormPresentation = ({
   noteFormTitleRef,
   handleKeyDown,
   notesActions,
+  handleActions,
 }) => {
   useEffect(() => {
     noteFormDescriptionRef.current.focus();
@@ -42,7 +43,10 @@ export const NoteFormPresentation = ({
           />
         </div>
         <div className="w-full flex justify-between items-center">
-          <NotesActions notesActions={notesActions} />
+          <NotesActions
+            notesActions={notesActions}
+            handleActions={handleActions}
+          />
           <button
             onClick={saveNote}
             className="px-6 py-[6px] hover:bg-[--hover-color] rounded text-sm"

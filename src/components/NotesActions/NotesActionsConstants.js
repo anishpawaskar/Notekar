@@ -17,5 +17,6 @@ export const NOTES_FORM_ACTIONS = [
     name: 'Archive',
     type: 'button',
     imgUrl: archiveIcon,
+    actionType: 'archive',
   },
 ];

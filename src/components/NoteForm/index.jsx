@@ -14,6 +14,7 @@ export const NoteForm = () => {
   const noteFormModalButtonRef = useRef(null);
   const noteFormTitleRef = useRef(null);
   const noteFormDescriptionRef = useRef(null);
+  const isNoteArchived = useRef(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -40,7 +41,7 @@ export const NoteForm = () => {
         await addNewNote({
           title,
           description,
-          states: { isDeleted: false },
+          states: { isArchived: isNoteArchived.current },
         }).unwrap();
         setTitle('');
         setDescription('');
@@ -58,6 +59,19 @@ export const NoteForm = () => {
       noteFormDescriptionRef.current.focus();
     }
   };
+
+  const handleActions = async (action) => {
+    switch (action) {
+      case 'archive': {
+        if (title || description) {
+          isNoteArchived.current = true;
+          await saveNote();
+        }
+      }
+    }
+  };
+
+  console.log('archive value', isNoteArchived.current);
 
   if (!isModalOpen) {
     return (
@@ -79,6 +93,7 @@ export const NoteForm = () => {
       noteFormDescriptionRef={noteFormDescriptionRef}
       handleKeyDown={handleKeyDown}
       notesActions={NOTES_FORM_ACTIONS}
+      handleActions={handleActions}
     />
   );
 };
