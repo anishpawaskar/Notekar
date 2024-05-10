@@ -11,6 +11,7 @@ export const EditNoteFormPresentation = ({
   noteFormTitleRef,
   noteFormDescriptionRef,
   handleActions,
+  notesActions,
 }) => {
   return (
     <>
@@ -41,7 +42,10 @@ export const EditNoteFormPresentation = ({
           />
         </div>
         <div className="w-full flex justify-between items-center">
-          <NotesActions handleActions={handleActions} />
+          <NotesActions
+            handleActions={handleActions}
+            notesActions={notesActions}
+          />
           <Link to="/">
             <button
               onClick={saveNote}

@@ -6,6 +6,7 @@ import {
   useGetNoteQuery,
   useUpdateNoteMutation,
 } from '../../app/services/api';
+import { NOTES_EDIT_FORM_ACTIONS } from '../NotesActions/NotesActionsConstants';
 
 export const EditNoteForm = () => {
   const { noteId } = useParams();
@@ -85,6 +86,7 @@ export const EditNoteForm = () => {
       noteFormTitleRef={noteFormTitleRef}
       noteFormDescriptionRef={noteFormDescriptionRef}
       handleActions={handleActions}
+      notesActions={NOTES_EDIT_FORM_ACTIONS}
     />
   );
 };

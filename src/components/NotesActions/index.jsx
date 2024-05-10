@@ -1,10 +1,9 @@
-import { NOTES_ACTIONS } from './NotesActionsConstants';
 import { NotesActionsPresentation } from './Presentation';
 
-export const NotesActions = ({ handleActions }) => {
+export const NotesActions = ({ handleActions, notesActions }) => {
   return (
     <NotesActionsPresentation
-      notesActions={NOTES_ACTIONS}
+      notesActions={notesActions}
       handleActions={handleActions}
     />
   );
