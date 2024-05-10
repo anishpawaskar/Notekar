@@ -48,9 +48,11 @@ export const NoteForm = () => {
         setTitle('');
         setDescription('');
         noteFormDescriptionRef.current.value = '';
+        setBgColor('#fff');
         setIsColorPaletteVisible(false);
         setIsModalOpen(false);
       }
+      setBgColor('#fff');
       setIsModalOpen(false);
       setIsColorPaletteVisible(false);
     } catch (err) {
