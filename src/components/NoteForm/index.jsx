@@ -43,6 +43,9 @@ export const NoteForm = () => {
         await addNewNote({
           title,
           description,
+          theme: {
+            backgroundColor: bgColor,
+          },
           states: { isArchived: isNoteArchived.current },
         }).unwrap();
         setTitle('');

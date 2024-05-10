@@ -63,7 +63,7 @@ export const NoteFormPresentation = ({
           />
           <button
             onClick={saveNote}
-            className="px-6 py-[6px] hover:bg-[--hover-color] rounded text-sm"
+            className="px-6 py-[6px] hover:bg-[--hover-color] rounded text-sm relative z-20"
           >
             Close
           </button>
