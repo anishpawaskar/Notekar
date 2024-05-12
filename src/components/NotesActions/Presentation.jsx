@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 
-export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
+export const NotesActionsPresentation = ({
+  notesActions,
+  handleActions,
+  noteId,
+}) => {
   const actions = notesActions.map((action) => {
     const isLinkBtn = action?.usedFor ? (
-      <button onClick={(e) => handleActions(e, action.actionType)}>
+      <button onClick={(e) => handleActions(e, action.actionType, noteId)}>
         <img
           className="h-[1.12rem] hover:scale-125"
           src={action.imgUrl}
@@ -12,7 +16,7 @@ export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
       </button>
     ) : (
       <Link to="/">
-        <button onClick={(e) => handleActions(e, action.actionType)}>
+        <button onClick={(e) => handleActions(e, action.actionType, noteId)}>
           <img
             className="h-[1.12rem] hover:scale-125"
             src={action.imgUrl}
