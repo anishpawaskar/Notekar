@@ -42,3 +42,30 @@ export const NOTES_FORM_ACTIONS = [
     actionType: 'archive',
   },
 ];
+
+export const NOTES_CARD_ACTIONS = [
+  {
+    id: '1',
+    name: 'Background-option',
+    type: 'button',
+    imgUrl: colorPaletteIcon,
+    actionType: 'changeBackground',
+    usedFor: 'card',
+  },
+  {
+    id: '2',
+    name: 'Archive',
+    type: 'button',
+    imgUrl: archiveIcon,
+    actionType: 'archive',
+    usedFor: 'card',
+  },
+  {
+    id: '3',
+    name: 'Delete',
+    type: 'button',
+    imgUrl: deleteIcon,
+    actionType: 'delete',
+    usedFor: 'card',
+  },
+];

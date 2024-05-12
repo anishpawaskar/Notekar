@@ -2,6 +2,26 @@ import { Link } from 'react-router-dom';
 
 export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
   const actions = notesActions.map((action) => {
+    const isLinkBtn = action?.usedFor ? (
+      <button onClick={(e) => handleActions(e, action.actionType)}>
+        <img
+          className="h-[1.12rem] hover:scale-125"
+          src={action.imgUrl}
+          alt={action.name}
+        />
+      </button>
+    ) : (
+      <Link to="/">
+        <button onClick={(e) => handleActions(e, action.actionType)}>
+          <img
+            className="h-[1.12rem] hover:scale-125"
+            src={action.imgUrl}
+            alt={action.name}
+          />
+        </button>
+      </Link>
+    );
+
     return (
       <div key={action.id}>
         {action.type === 'input' ? (
@@ -21,15 +41,7 @@ export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
             />
           </>
         ) : (
-          <Link to="/">
-            <button onClick={(e) => handleActions(e, action.actionType)}>
-              <img
-                className="h-[1.12rem] hover:scale-125"
-                src={action.imgUrl}
-                alt={action.name}
-              />
-            </button>
-          </Link>
+          isLinkBtn
         )}
       </div>
     );
