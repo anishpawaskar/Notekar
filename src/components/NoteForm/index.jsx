@@ -6,7 +6,6 @@ import { NOTES_FORM_ACTIONS } from '../NotesActions/NotesActionsConstants';
 
 export const NoteForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   const [addNewNote] = useAddNewNoteMutation();
@@ -27,15 +26,12 @@ export const NoteForm = () => {
     }
   };
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
-
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
 
   const saveNote = async () => {
+    const title = noteFormTitleRef.current.value;
     try {
       if (title || description) {
         await addNewNote({
@@ -43,7 +39,7 @@ export const NoteForm = () => {
           description,
           states: { isArchived: isNoteArchived.current },
         }).unwrap();
-        setTitle('');
+        noteFormTitleRef.current.value = '';
         setDescription('');
         setIsModalOpen(false);
         noteFormDescriptionRef.current.value = '';
@@ -84,7 +80,6 @@ export const NoteForm = () => {
   return (
     <NoteFormPresentation
       handleDescriptionChange={handleDescriptionChange}
-      handleTitleChange={handleTitleChange}
       saveNote={saveNote}
       description={description}
       noteFormTitleRef={noteFormTitleRef}

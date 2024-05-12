@@ -14,26 +14,8 @@ export const EditNoteForm = () => {
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-
   const noteFormTitleRef = useRef(null);
   const noteFormDescriptionRef = useRef(null);
-
-  useEffect(() => {
-    if (!isLoading && data?.note) {
-      setTitle(data.note.title ?? '');
-      setDescription(data.note.description ?? '');
-    }
-  }, [data, isLoading]);
-
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -42,6 +24,8 @@ export const EditNoteForm = () => {
   };
 
   const saveNote = async () => {
+    const title = noteFormTitleRef.current.value;
+    const description = noteFormDescriptionRef.current.value;
     try {
       if (title || description) {
         updateNote({
@@ -77,12 +61,10 @@ export const EditNoteForm = () => {
 
   return (
     <EditNoteFormPresentation
-      handleTitleChange={handleTitleChange}
       handleKeyDown={handleKeyDown}
-      handleDescriptionChange={handleDescriptionChange}
       saveNote={saveNote}
-      title={title}
-      description={description}
+      title={data?.note?.title ?? ''}
+      description={data?.note?.description ?? ''}
       noteFormTitleRef={noteFormTitleRef}
       noteFormDescriptionRef={noteFormDescriptionRef}
       handleActions={handleActions}
