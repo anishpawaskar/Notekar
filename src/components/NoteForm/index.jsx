@@ -69,17 +69,19 @@ export const NoteForm = () => {
     }
   };
 
-  const handleActions = async (action) => {
+  const handleActions = async (e, action) => {
     switch (action) {
       case 'archive': {
         if (title || description) {
           isNoteArchived.current = true;
           await saveNote();
+          break;
         }
       }
 
       case 'changeBackground': {
         setIsColorPaletteVisible(true);
+        break;
       }
     }
   };
