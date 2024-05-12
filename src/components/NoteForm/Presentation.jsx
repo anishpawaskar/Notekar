@@ -5,7 +5,6 @@ import { ColorPalette } from '../ColorPalette';
 
 export const NoteFormPresentation = ({
   handleDescriptionChange,
-  handleTitleChange,
   saveNote,
   description,
   noteFormDescriptionRef,
@@ -36,7 +35,6 @@ export const NoteFormPresentation = ({
         <div className="w-full flex flex-col gap-4">
           <input
             ref={noteFormTitleRef}
-            onChange={(e) => handleTitleChange(e)}
             onKeyDown={(e) => handleKeyDown(e)}
             type="text"
             className="h-5 focus:outline-none font-medium text-base placeholder:text-black bg-transparent"

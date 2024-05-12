@@ -3,9 +3,7 @@ import { NotesActions } from '../NotesActions';
 import { ColorPalette } from '../ColorPalette';
 
 export const EditNoteFormPresentation = ({
-  handleTitleChange,
   handleKeyDown,
-  handleDescriptionChange,
   saveNote,
   title,
   description,
@@ -33,20 +31,18 @@ export const EditNoteFormPresentation = ({
       >
         <div className="w-full flex flex-col gap-4">
           <input
+            defaultValue={title}
             ref={noteFormTitleRef}
-            onChange={(e) => handleTitleChange(e)}
             onKeyDown={(e) => handleKeyDown(e)}
             type="text"
             className="h-5 focus:outline-none text-black placeholder:text-black bg-transparent text-xl"
-            value={title}
             placeholder="Title"
           />
           <input
+            defaultValue={description}
             ref={noteFormDescriptionRef}
-            onChange={(e) => handleDescriptionChange(e)}
             className="h-5 focus:outline-none text-black placeholder:text-black text-sm bg-transparent"
             type="text"
-            value={description}
             placeholder="Take a note..."
           />
         </div>

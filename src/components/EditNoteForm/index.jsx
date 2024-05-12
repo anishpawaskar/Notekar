@@ -13,32 +13,18 @@ export const EditNoteForm = () => {
   const { data, isLoading } = useGetNoteQuery(noteId);
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
-
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  
   const [bgColor, setBgColor] = useState('');
   const [hoverBackgroundColor, setHoverBackgroundColor] = useState('');
   const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
 
-  const noteFormTitleRef = useRef(null);
-  const noteFormDescriptionRef = useRef(null);
 
   useEffect(() => {
     if (!isLoading && data?.note) {
-      setTitle(data.note.title ?? '');
-      setDescription(data.note.description ?? '');
       setBgColor(data.note?.theme?.backgroundColor);
       setHoverBackgroundColor(data.note?.theme?.hoverBackgroundColor);
     }
   }, [data, isLoading]);
-
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -47,6 +33,8 @@ export const EditNoteForm = () => {
   };
 
   const saveNote = async () => {
+    const title = noteFormTitleRef.current.value;
+    const description = noteFormDescriptionRef.current.value;
     try {
       if (title || description) {
         updateNote({
@@ -99,12 +87,10 @@ export const EditNoteForm = () => {
 
   return (
     <EditNoteFormPresentation
-      handleTitleChange={handleTitleChange}
       handleKeyDown={handleKeyDown}
-      handleDescriptionChange={handleDescriptionChange}
       saveNote={saveNote}
-      title={title}
-      description={description}
+      title={data?.note?.title ?? ''}
+      description={data?.note?.description ?? ''}
       noteFormTitleRef={noteFormTitleRef}
       noteFormDescriptionRef={noteFormDescriptionRef}
       handleActions={handleActions}
