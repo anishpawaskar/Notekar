@@ -20,6 +20,7 @@ export const EditNoteForm = () => {
 
   const noteFormTitleRef = useRef(null);
   const noteFormDescriptionRef = useRef(null);
+  const isNoteArchived = useRef(false);
 
   useEffect(() => {
     if (!isLoading && data?.note) {
@@ -48,7 +49,7 @@ export const EditNoteForm = () => {
             hoverBackgroundColor: hoverBackgroundColor,
           },
           states: {
-            isArchived: false,
+            isArchived: isNoteArchived.current,
           },
         },
       }).unwrap();
@@ -62,6 +63,12 @@ export const EditNoteForm = () => {
       case 'changeBackground': {
         e.preventDefault();
         setIsColorPaletteVisible(true);
+        break;
+      }
+
+      case 'archive': {
+        isNoteArchived.current = true;
+        await saveNote();
         break;
       }
 

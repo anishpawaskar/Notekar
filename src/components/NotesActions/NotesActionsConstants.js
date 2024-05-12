@@ -12,6 +12,13 @@ export const NOTES_EDIT_FORM_ACTIONS = [
   },
   {
     id: '2',
+    name: 'Archive',
+    type: 'button',
+    imgUrl: archiveIcon,
+    actionType: 'archive',
+  },
+  {
+    id: '3',
     name: 'Delete',
     type: 'button',
     imgUrl: deleteIcon,
