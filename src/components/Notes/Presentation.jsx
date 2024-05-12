@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { NoteCard } from './components/NoteCard';
+import { NoteCard } from './components/noteCard';
 
 export const NotesPresentation = ({
   data,
