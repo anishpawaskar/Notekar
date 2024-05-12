@@ -7,6 +7,9 @@ import { NOTES_FORM_ACTIONS } from '../NotesActions/NotesActionsConstants';
 export const NoteForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [description, setDescription] = useState('');
+  const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
+  const [bgColor, setBgColor] = useState('#fff');
+  const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
 
   const [addNewNote] = useAddNewNoteMutation();
 
@@ -37,14 +40,24 @@ export const NoteForm = () => {
         await addNewNote({
           title,
           description,
+          theme: {
+            backgroundColor: bgColor,
+            hoverBackgroundColor: hoverBackgroundColor,
+          },
           states: { isArchived: isNoteArchived.current },
         }).unwrap();
         noteFormTitleRef.current.value = '';
         setDescription('');
-        setIsModalOpen(false);
         noteFormDescriptionRef.current.value = '';
+        setBgColor('#fff');
+        setHoverBackgroundColor('#e0e0e0');
+        setIsColorPaletteVisible(false);
+        setIsModalOpen(false);
       }
+      setBgColor('#fff');
+      setHoverBackgroundColor('#e0e0e0');
       setIsModalOpen(false);
+      setIsColorPaletteVisible(false);
     } catch (err) {
       console.error(err);
     }
@@ -56,15 +69,30 @@ export const NoteForm = () => {
     }
   };
 
-  const handleActions = async (action) => {
+  const handleActions = async (e, action) => {
     switch (action) {
       case 'archive': {
         if (title || description) {
           isNoteArchived.current = true;
           await saveNote();
+          break;
         }
       }
+
+      case 'changeBackground': {
+        setIsColorPaletteVisible(true);
+        break;
+      }
     }
+  };
+
+  const closeColorPalette = () => {
+    setIsColorPaletteVisible(false);
+  };
+
+  const colorHandler = (color, hoverBgColor) => {
+    setBgColor(color);
+    setHoverBackgroundColor(hoverBgColor);
   };
 
   if (!isModalOpen) {
@@ -87,6 +115,11 @@ export const NoteForm = () => {
       handleKeyDown={handleKeyDown}
       notesActions={NOTES_FORM_ACTIONS}
       handleActions={handleActions}
+      isColorPaletteVisible={isColorPaletteVisible}
+      closeColorPalette={closeColorPalette}
+      bgColor={bgColor}
+      hoverBackgroundColor={hoverBackgroundColor}
+      colorHandler={colorHandler}
     />
   );
 };

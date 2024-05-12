@@ -14,6 +14,7 @@ export const api = createApi({
       query: (noteId) => ({
         url: `/notes/${noteId}`,
       }),
+      providesTags: ['Note'],
     }),
     addNewNote: builder.mutation({
       query: (body) => ({

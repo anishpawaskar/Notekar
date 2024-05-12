@@ -13,9 +13,18 @@ export const EditNoteForm = () => {
   const { data, isLoading } = useGetNoteQuery(noteId);
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
+  
+  const [bgColor, setBgColor] = useState('');
+  const [hoverBackgroundColor, setHoverBackgroundColor] = useState('');
+  const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
 
-  const noteFormTitleRef = useRef(null);
-  const noteFormDescriptionRef = useRef(null);
+
+  useEffect(() => {
+    if (!isLoading && data?.note) {
+      setBgColor(data.note?.theme?.backgroundColor);
+      setHoverBackgroundColor(data.note?.theme?.hoverBackgroundColor);
+    }
+  }, [data, isLoading]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -33,8 +42,12 @@ export const EditNoteForm = () => {
           body: {
             title,
             description,
+            theme: {
+              backgroundColor: bgColor,
+              hoverBackgroundColor: hoverBackgroundColor,
+            },
             states: {
-              isDeleted: false,
+              isArchived: false,
             },
           },
         }).unwrap();
@@ -44,15 +57,28 @@ export const EditNoteForm = () => {
     }
   };
 
-  const handleActions = async (action) => {
+  const handleActions = async (e, action) => {
     switch (action) {
-      case 'delete': {
-        await deleteNote(noteId).unwrap();
+      case 'changeBackground': {
+        e.preventDefault();
+        setIsColorPaletteVisible(true);
+        break;
       }
 
-      default:
-        return action;
+      case 'delete': {
+        await deleteNote(noteId).unwrap();
+        break;
+      }
     }
+  };
+
+  const closeColorPalette = () => {
+    setIsColorPaletteVisible(false);
+  };
+
+  const colorHandler = (color, hoverBgColor) => {
+    setBgColor(color);
+    setHoverBackgroundColor(hoverBgColor);
   };
 
   if (isLoading) {
@@ -69,6 +95,11 @@ export const EditNoteForm = () => {
       noteFormDescriptionRef={noteFormDescriptionRef}
       handleActions={handleActions}
       notesActions={NOTES_EDIT_FORM_ACTIONS}
+      bgColor={bgColor}
+      hoverBackgroundColor={hoverBackgroundColor}
+      isColorPaletteVisible={isColorPaletteVisible}
+      closeColorPalette={closeColorPalette}
+      colorHandler={colorHandler}
     />
   );
 };
