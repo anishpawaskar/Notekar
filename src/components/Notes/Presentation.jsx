@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import { EditNoteForm } from '../EditNoteForm';
 import { NoteCard } from './components/NoteCard';
 
 export const NotesPresentation = ({ data, isLoading }) => {
