@@ -10,7 +10,11 @@ export const NoteCard = ({ note }) => {
         }}
         className="max-w-[250px] flex flex-col gap-4 mt-4 mx-auto rounded-md p-4 shadow-md border"
       >
-        {note.title && <p className="font-medium">{note.title}</p>}
+        {note.title && (
+          <p className="font-medium whitespace-pre-wrap break-words">
+            {note.title}
+          </p>
+        )}
         {note.description && <p className="text-lg">{note.description}</p>}
       </div>
     </Link>
