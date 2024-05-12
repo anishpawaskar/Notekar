@@ -10,6 +10,7 @@ export const NoteForm = () => {
   const [description, setDescription] = useState('');
   const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
   const [bgColor, setBgColor] = useState('#fff');
+  const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
 
   const [addNewNote] = useAddNewNoteMutation();
 
@@ -45,6 +46,7 @@ export const NoteForm = () => {
           description,
           theme: {
             backgroundColor: bgColor,
+            hoverBackgroundColor: hoverBackgroundColor,
           },
           states: { isArchived: isNoteArchived.current },
         }).unwrap();
@@ -52,10 +54,12 @@ export const NoteForm = () => {
         setDescription('');
         noteFormDescriptionRef.current.value = '';
         setBgColor('#fff');
+        setHoverBackgroundColor('#e0e0e0');
         setIsColorPaletteVisible(false);
         setIsModalOpen(false);
       }
       setBgColor('#fff');
+      setHoverBackgroundColor('#e0e0e0');
       setIsModalOpen(false);
       setIsColorPaletteVisible(false);
     } catch (err) {
@@ -90,8 +94,9 @@ export const NoteForm = () => {
     setIsColorPaletteVisible(false);
   };
 
-  const colorHandler = (color) => {
+  const colorHandler = (color, hoverBgColor) => {
     setBgColor(color);
+    setHoverBackgroundColor(hoverBgColor);
   };
 
   if (!isModalOpen) {
@@ -118,6 +123,7 @@ export const NoteForm = () => {
       isColorPaletteVisible={isColorPaletteVisible}
       closeColorPalette={closeColorPalette}
       bgColor={bgColor}
+      hoverBackgroundColor={hoverBackgroundColor}
       colorHandler={colorHandler}
     />
   );

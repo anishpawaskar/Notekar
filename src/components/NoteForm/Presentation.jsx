@@ -16,6 +16,7 @@ export const NoteFormPresentation = ({
   isColorPaletteVisible,
   closeColorPalette,
   bgColor,
+  hoverBackgroundColor,
   colorHandler,
 }) => {
   useEffect(() => {
@@ -63,7 +64,7 @@ export const NoteFormPresentation = ({
           />
           <button
             onClick={saveNote}
-            className="px-6 py-[6px] hover:bg-[--hover-color] rounded text-sm relative z-20"
+            className={`px-6 py-[6px] hover:bg-[${hoverBackgroundColor}] rounded text-sm relative z-20`}
           >
             Close
           </button>
