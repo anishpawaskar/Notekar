@@ -13,11 +13,13 @@ export const EditNoteForm = () => {
   const { data, isLoading } = useGetNoteQuery(noteId);
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
-  
+
   const [bgColor, setBgColor] = useState('');
   const [hoverBackgroundColor, setHoverBackgroundColor] = useState('');
   const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
 
+  const noteFormTitleRef = useRef(null);
+  const noteFormDescriptionRef = useRef(null);
 
   useEffect(() => {
     if (!isLoading && data?.note) {
