@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { NotesActions } from '../../NotesActions';
 
-export const NoteCard = ({ note, notesActions }) => {
+export const NoteCard = ({ note, notesActions, handleActions }) => {
   return (
     <Link className="block max-w-[250px] mt-4 mx-auto" to={`/${note._id}`}>
       <div
@@ -24,7 +24,11 @@ export const NoteCard = ({ note, notesActions }) => {
         {note.title === '' && note.description === '' && (
           <p className="m-0 text-xl">Empty note</p>
         )}
-        <NotesActions notesActions={notesActions} />
+        <NotesActions
+          notesActions={notesActions}
+          handleActions={handleActions}
+          noteId={note._id}
+        />
       </div>
     </Link>
   );
