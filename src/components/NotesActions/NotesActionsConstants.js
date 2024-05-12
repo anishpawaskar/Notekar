@@ -5,6 +5,13 @@ import colorPaletteIcon from './assets/color-palette-icon.png';
 export const NOTES_EDIT_FORM_ACTIONS = [
   {
     id: '1',
+    name: 'Background-option',
+    type: 'button',
+    imgUrl: colorPaletteIcon,
+    actionType: 'changeBackground',
+  },
+  {
+    id: '2',
     name: 'Delete',
     type: 'button',
     imgUrl: deleteIcon,
