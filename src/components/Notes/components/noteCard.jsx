@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { NotesActions } from '../../NotesActions';
 
-export const NoteCard = ({ note }) => {
+export const NoteCard = ({ note, notesActions }) => {
   return (
     <Link className="block max-w-[250px] mt-4 mx-auto" to={`/${note._id}`}>
       <div
@@ -23,6 +24,7 @@ export const NoteCard = ({ note }) => {
         {note.title === '' && note.description === '' && (
           <p className="m-0 text-xl">Empty note</p>
         )}
+        <NotesActions notesActions={notesActions} />
       </div>
     </Link>
   );
