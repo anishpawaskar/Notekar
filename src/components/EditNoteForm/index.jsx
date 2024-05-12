@@ -38,22 +38,20 @@ export const EditNoteForm = () => {
     const title = noteFormTitleRef.current.value;
     const description = noteFormDescriptionRef.current.value;
     try {
-      if (title || description) {
-        updateNote({
-          noteId,
-          body: {
-            title,
-            description,
-            theme: {
-              backgroundColor: bgColor,
-              hoverBackgroundColor: hoverBackgroundColor,
-            },
-            states: {
-              isArchived: false,
-            },
+      updateNote({
+        noteId,
+        body: {
+          title,
+          description,
+          theme: {
+            backgroundColor: bgColor,
+            hoverBackgroundColor: hoverBackgroundColor,
           },
-        }).unwrap();
-      }
+          states: {
+            isArchived: false,
+          },
+        },
+      }).unwrap();
     } catch (err) {
       console.error(err);
     }
