@@ -1,12 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import { NoteCard } from './components/NoteCard';
+import { NotesCard } from './components/NotesCard';
 
-export const NotesPresentation = ({
-  data,
-  isLoading,
-  notesActions,
-  handleActions,
-}) => {
+export const NotesPresentation = ({ data, isLoading, notesActions }) => {
   let noteSection;
 
   if (isLoading) {
@@ -14,12 +9,7 @@ export const NotesPresentation = ({
   } else {
     noteSection = data?.notes?.map((note) => {
       return (
-        <NoteCard
-          note={note}
-          key={note._id}
-          notesActions={notesActions}
-          handleActions={handleActions}
-        />
+        <NotesCard note={note} key={note._id} notesActions={notesActions} />
       );
     });
   }
