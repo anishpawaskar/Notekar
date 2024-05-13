@@ -14,7 +14,7 @@ export const ColorPalettePresentation = ({
       <li key={idx} style={{ background: color.color }} className={liClassName}>
         {color.name === 'Default' ? (
           <button
-            onClick={() => colorHandler(color.color, color.hoverBgColor)}
+            onClick={(e) => colorHandler(color.color, color.hoverBgColor, e)}
             className="h-full w-full rounded-full"
           >
             <img
@@ -25,7 +25,7 @@ export const ColorPalettePresentation = ({
           </button>
         ) : (
           <button
-            onClick={() => colorHandler(color.color, color.hoverBgColor)}
+            onClick={(e) => colorHandler(color.color, color.hoverBgColor, e)}
             className="h-full w-full rounded-full"
           ></button>
         )}
