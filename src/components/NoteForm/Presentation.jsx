@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { NotesActions } from '../NotesActions';
 import { ColorPalette } from '../ColorPalette';
+import deleteIcon from './assets/delete-icon.png';
 
 export const NoteFormPresentation = ({
   handleDescriptionChange,
@@ -17,6 +18,12 @@ export const NoteFormPresentation = ({
   bgColor,
   hoverBackgroundColor,
   colorHandler,
+  imageHandler,
+  imgUrl,
+  isImgDeleteBtnVisible,
+  handleMouseEnter,
+  handleMouseLeave,
+  imageDeleteHandler,
 }) => {
   useEffect(() => {
     noteFormDescriptionRef.current.focus();
@@ -30,9 +37,34 @@ export const NoteFormPresentation = ({
       />
       <div
         style={{ background: bgColor }}
-        className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] m-auto mt-4 rounded-lg shadow-lg p-3 border relative z-30 flex flex-col gap-4 transition-all ease-in duration-500"
+        className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] m-auto mt-4 rounded-lg shadow-lg border relative z-30 flex flex-col gap-4 transition-all ease-in duration-500"
       >
-        <div className="w-full flex flex-col gap-4">
+        {imgUrl && (
+          <div
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className="w-full relative rounded-t-lg"
+          >
+            <img
+              className="w-full object-contain rounded-t-lg"
+              src={imgUrl}
+              alt="img"
+            />
+            {isImgDeleteBtnVisible && (
+              <button
+                onClick={imageDeleteHandler}
+                className="absolute w-8 h-8 rounded-sm flex justify-center items-center right-2 bottom-2 bg-[#424242b2] hover:bg-[#333333]"
+              >
+                <img
+                  className="h-[1.12rem]"
+                  src={deleteIcon}
+                  alt="delete-icon"
+                />
+              </button>
+            )}
+          </div>
+        )}
+        <div className="w-full flex flex-col gap-4 px-3 pt-3">
           <input
             ref={noteFormTitleRef}
             onKeyDown={(e) => handleKeyDown(e)}
@@ -55,10 +87,11 @@ export const NoteFormPresentation = ({
             colorHandler={colorHandler}
           />
         )}
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex justify-between items-center px-3 pb-3">
           <NotesActions
             notesActions={notesActions}
             handleActions={handleActions}
+            imageHandler={imageHandler}
           />
           <button
             onClick={saveNote}
