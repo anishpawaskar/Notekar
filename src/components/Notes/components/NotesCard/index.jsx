@@ -3,18 +3,13 @@ import {
   useDeleteNoteMutation,
   useUpdateNoteMutation,
 } from '../../../../app/services/api';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const NotesCard = ({ note, notesActions }) => {
-  const [bgColor, setBgColor] = useState(null);
   const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
 
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
-
-  useEffect(() => {
-    setBgColor(note.theme.backgroundColor);
-  }, [note.theme.backgroundColor]);
 
   const handleActions = async (e, action) => {
     e.preventDefault();
@@ -50,7 +45,6 @@ export const NotesCard = ({ note, notesActions }) => {
 
   const colorHandler = async (color, hoverBgColor, e) => {
     e.preventDefault();
-    setBgColor(color);
     await updateNote({
       noteId: note._id,
       body: {
@@ -66,7 +60,7 @@ export const NotesCard = ({ note, notesActions }) => {
       note={note}
       notesActions={notesActions}
       handleActions={handleActions}
-      bgColor={bgColor}
+      bgColor={note?.theme?.backgroundColor}
       isColorPaletteVisible={isColorPaletteVisible}
       closeColorPalette={closeColorPalette}
       colorHandler={colorHandler}
