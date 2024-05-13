@@ -24,19 +24,28 @@ export const NotesCardPresentation = ({
           style={{
             background: bgColor,
           }}
-          className="max-w-[250px] max-h-[300px]  flex flex-col gap-4 mt-4 mx-auto rounded-md p-4 shadow-md border relative"
+          className="max-w-[250px] max-h-[300px]  flex flex-col gap-4 mt-4 mx-auto rounded-md shadow-md border relative"
         >
           {note.title && (
-            <p className="font-medium whitespace-pre-wrap break-words max-h-[140px] overflow-hidden">
+            <p className="font-medium whitespace-pre-wrap break-words max-h-[140px] overflow-hidden px-4 pt-4">
               {note.title}
             </p>
           )}
           {note.description && (
-            <p className="text-lg whitespace-pre-wrap break-words max-h-[140px] overflow-hidden ">
+            <p className="text-lg whitespace-pre-wrap break-words max-h-[140px] overflow-hidden px-4 pt-4">
               {note.description}
             </p>
           )}
-          {note.title === '' && note.description === '' && (
+          {note.imageUrl && (
+            <div>
+              <img
+                className="w-full object-contain rounded-t-md"
+                src={note.imageUrl}
+                alt="note-img"
+              />
+            </div>
+          )}
+          {!note.title && !note.description && !note.imageUrl && (
             <p className="m-0 text-xl">Empty note</p>
           )}
           {isColorPaletteVisible && (
@@ -51,10 +60,12 @@ export const NotesCardPresentation = ({
               />
             </div>
           )}
-          <NotesActions
-            notesActions={notesActions}
-            handleActions={handleActions}
-          />
+          <div className="px-4 pb-4">
+            <NotesActions
+              notesActions={notesActions}
+              handleActions={handleActions}
+            />
+          </div>
         </div>
       </Link>
     </>
