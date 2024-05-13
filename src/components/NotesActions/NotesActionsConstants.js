@@ -1,6 +1,7 @@
 import deleteIcon from './assets/delete-icon.png';
 import archiveIcon from './assets/archive-icon.png';
 import colorPaletteIcon from './assets/color-palette-icon.png';
+import imgUploaderIcon from './assets/img-uploader-icon.png';
 
 export const NOTES_EDIT_FORM_ACTIONS = [
   {
@@ -33,6 +34,13 @@ export const NOTES_FORM_ACTIONS = [
     type: 'button',
     imgUrl: colorPaletteIcon,
     actionType: 'changeBackground',
+  },
+  {
+    id: '2',
+    name: 'Add Image',
+    type: 'input',
+    imgUrl: imgUploaderIcon,
+    actionType: 'uplaodImage',
   },
   {
     id: '2',

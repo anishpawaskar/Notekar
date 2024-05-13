@@ -23,7 +23,10 @@ export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
     );
 
     return (
-      <div key={action.id}>
+      <div
+        className={action.type === 'input' && 'self-baseline'}
+        key={action.id}
+      >
         {action.type === 'input' ? (
           <>
             <label htmlFor="upload">
