@@ -43,7 +43,7 @@ export const NOTES_FORM_ACTIONS = [
     actionType: 'uplaodImage',
   },
   {
-    id: '2',
+    id: '3',
     name: 'Archive',
     type: 'button',
     imgUrl: archiveIcon,
