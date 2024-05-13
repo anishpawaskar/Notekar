@@ -3,6 +3,7 @@ import { NoteFormModalButton } from './ModalButton';
 import { NoteFormPresentation } from './Presentation';
 import { useAddNewNoteMutation } from '../../app/services/api';
 import { NOTES_FORM_ACTIONS } from '../NotesActions/NotesActionsConstants';
+import { fetchIMGUrl } from '../../utils/fetchImageUrl';
 
 export const NoteForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,6 +11,8 @@ export const NoteForm = () => {
   const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
   const [bgColor, setBgColor] = useState('#fff');
   const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
+  const [imgUrl, setImgUrl] = useState(null);
+  const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
 
   const [addNewNote] = useAddNewNoteMutation();
 
@@ -17,6 +20,7 @@ export const NoteForm = () => {
   const noteFormTitleRef = useRef(null);
   const noteFormDescriptionRef = useRef(null);
   const isNoteArchived = useRef(false);
+  const imageFileDataRef = useRef(null);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -35,8 +39,13 @@ export const NoteForm = () => {
 
   const saveNote = async () => {
     const title = noteFormTitleRef.current.value;
+    let noteImgUrl = '';
+    if (imageFileDataRef.current) {
+      noteImgUrl = await fetchIMGUrl(imageFileDataRef.current);
+    }
+
     try {
-      if (title || description) {
+      if (title || description || imageFileDataRef.current) {
         await addNewNote({
           title,
           description,
@@ -44,6 +53,7 @@ export const NoteForm = () => {
             backgroundColor: bgColor,
             hoverBackgroundColor: hoverBackgroundColor,
           },
+          imageUrl: noteImgUrl,
           states: { isArchived: isNoteArchived.current },
         }).unwrap();
         noteFormTitleRef.current.value = '';
@@ -52,10 +62,14 @@ export const NoteForm = () => {
         setBgColor('#fff');
         setHoverBackgroundColor('#e0e0e0');
         setIsColorPaletteVisible(false);
+        setImgUrl(null);
+        imageFileDataRef.current = null;
         setIsModalOpen(false);
       }
       setBgColor('#fff');
       setHoverBackgroundColor('#e0e0e0');
+      setImgUrl(null);
+      imageFileDataRef.current = null;
       setIsModalOpen(false);
       setIsColorPaletteVisible(false);
     } catch (err) {
@@ -95,6 +109,32 @@ export const NoteForm = () => {
     setHoverBackgroundColor(hoverBgColor);
   };
 
+  const imageHandler = (e) => {
+    const file = e.target.files[0];
+    imageFileDataRef.current = file;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setImgUrl(reader.result);
+    };
+
+    e.target.value = null;
+  };
+
+  const handleMouseEnter = () => {
+    setIsImgDeleteBtnVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsImgDeleteBtnVisible(false);
+  };
+
+  const imageDeleteHandler = () => {
+    setImgUrl(null);
+    imageFileDataRef.current = null;
+  };
+
   if (!isModalOpen) {
     return (
       <NoteFormModalButton
@@ -120,6 +160,12 @@ export const NoteForm = () => {
       bgColor={bgColor}
       hoverBackgroundColor={hoverBackgroundColor}
       colorHandler={colorHandler}
+      imageHandler={imageHandler}
+      imgUrl={imgUrl}
+      isImgDeleteBtnVisible={isImgDeleteBtnVisible}
+      handleMouseEnter={handleMouseEnter}
+      handleMouseLeave={handleMouseLeave}
+      imageDeleteHandler={imageDeleteHandler}
     />
   );
 };

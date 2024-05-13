@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 
-export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
+export const NotesActionsPresentation = ({
+  notesActions,
+  handleActions,
+  imageHandler,
+}) => {
   const actions = notesActions.map((action) => {
     const isLinkBtn = action?.usedFor ? (
       <button onClick={(e) => handleActions(e, action.actionType)}>
@@ -23,7 +27,10 @@ export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
     );
 
     return (
-      <div key={action.id}>
+      <div
+        className={action.type === 'input' ? 'self-baseline' : 'self-auto'}
+        key={action.id}
+      >
         {action.type === 'input' ? (
           <>
             <label htmlFor="upload">
@@ -34,6 +41,7 @@ export const NotesActionsPresentation = ({ notesActions, handleActions }) => {
               />
             </label>
             <input
+              onChange={(e) => imageHandler(e)}
               id="upload"
               type="file"
               accept="image/png, image/jpeg"
