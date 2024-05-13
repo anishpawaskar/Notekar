@@ -35,7 +35,7 @@ export const EditNoteFormPresentation = ({
             ref={noteFormTitleRef}
             onKeyDown={(e) => handleKeyDown(e)}
             type="text"
-            className="h-5 focus:outline-none text-black placeholder:text-black bg-transparent text-xl"
+            className="h-5 focus:outline-none text-black placeholder:text-black bg-transparent text-md"
             placeholder="Title"
           />
           <input
