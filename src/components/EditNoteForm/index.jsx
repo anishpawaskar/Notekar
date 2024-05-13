@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { EditNoteFormPresentation } from './Presentation';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useDeleteNoteMutation,
   useGetNoteQuery,
@@ -11,6 +11,7 @@ import { fetchIMGUrl } from '../../utils/fetchImageUrl';
 
 export const EditNoteForm = () => {
   const { noteId } = useParams();
+  const navigate = useNavigate();
   const { data, isLoading } = useGetNoteQuery(noteId);
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
@@ -32,7 +33,8 @@ export const EditNoteForm = () => {
       setHoverBackgroundColor(data.note?.theme?.hoverBackgroundColor);
       if (data.note?.imageUrl) {
         setImgUrl(data.note?.imageUrl);
-        noteFormTitleRef.current = data.note?.imageUrl;
+        imageFileDataRef.current = data.note?.imageUrl;
+        console.log('from effect', imageFileDataRef);
       }
     }
   }, [data, isLoading]);
@@ -51,7 +53,7 @@ export const EditNoteForm = () => {
       noteImgUrl = await fetchIMGUrl(imageFileDataRef.current);
     }
     try {
-      updateNote({
+      await updateNote({
         noteId,
         body: {
           title,
@@ -66,6 +68,7 @@ export const EditNoteForm = () => {
           },
         },
       }).unwrap();
+      navigate('/');
     } catch (err) {
       console.error(err);
     }

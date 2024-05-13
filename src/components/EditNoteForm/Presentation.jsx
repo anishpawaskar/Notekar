@@ -90,14 +90,12 @@ export const EditNoteFormPresentation = ({
             notesActions={notesActions}
             imageHandler={imageHandler}
           />
-          <Link to="/">
-            <button
-              onClick={saveNote}
-              className={`px-6 py-[6px] hover:bg-[${hoverBackgroundColor}] rounded text-sm relative z-20`}
-            >
-              Close
-            </button>
-          </Link>
+          <button
+            onClick={saveNote}
+            className={`px-6 py-[6px] hover:bg-[${hoverBackgroundColor}] rounded text-sm relative z-20`}
+          >
+            Close
+          </button>
         </div>
       </div>
     </>
