@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { NotesActions } from '../NotesActions';
 import { ColorPalette } from '../ColorPalette';
+import deleteIcon from './assets/delete-icon.png';
 
 export const EditNoteFormPresentation = ({
   handleKeyDown,
@@ -16,6 +17,12 @@ export const EditNoteFormPresentation = ({
   isColorPaletteVisible,
   closeColorPalette,
   colorHandler,
+  imgUrl,
+  isImgDeleteBtnVisible,
+  imageHandler,
+  handleMouseEnter,
+  handleMouseLeave,
+  imageDeleteHandler,
 }) => {
   return (
     <>
@@ -27,9 +34,34 @@ export const EditNoteFormPresentation = ({
       </Link>
       <div
         style={{ background: bgColor, borderColor: bgColor }}
-        className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] absolute left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]  mt-4 rounded shadow-lg p-3 border z-30 flex flex-col gap-4"
+        className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] absolute left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]  mt-4 rounded-lg shadow-lg z-30 flex flex-col gap-4"
       >
-        <div className="w-full flex flex-col gap-4">
+        {imgUrl && (
+          <div
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className="w-full relative rounded-t-lg"
+          >
+            <img
+              className="w-full object-contain rounded-t-lg"
+              src={imgUrl}
+              alt="img"
+            />
+            {isImgDeleteBtnVisible && (
+              <button
+                onClick={imageDeleteHandler}
+                className="absolute w-8 h-8 rounded-sm flex justify-center items-center right-2 bottom-2 bg-[#424242b2] hover:bg-[#333333]"
+              >
+                <img
+                  className="h-[1.12rem]"
+                  src={deleteIcon}
+                  alt="delete-icon"
+                />
+              </button>
+            )}
+          </div>
+        )}
+        <div className="w-full flex flex-col gap-4 px-3 pt-3">
           <input
             defaultValue={title}
             ref={noteFormTitleRef}
@@ -52,10 +84,11 @@ export const EditNoteFormPresentation = ({
             colorHandler={colorHandler}
           />
         )}
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex justify-between items-center px-3 pb-3">
           <NotesActions
             handleActions={handleActions}
             notesActions={notesActions}
+            imageHandler={imageHandler}
           />
           <Link to="/">
             <button

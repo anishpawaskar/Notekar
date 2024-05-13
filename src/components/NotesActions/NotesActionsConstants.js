@@ -13,13 +13,20 @@ export const NOTES_EDIT_FORM_ACTIONS = [
   },
   {
     id: '2',
+    name: 'Add Image',
+    type: 'input',
+    imgUrl: imgUploaderIcon,
+    actionType: 'uplaodImage',
+  },
+  {
+    id: '3',
     name: 'Archive',
     type: 'button',
     imgUrl: archiveIcon,
     actionType: 'archive',
   },
   {
-    id: '3',
+    id: '4',
     name: 'Delete',
     type: 'button',
     imgUrl: deleteIcon,
