@@ -3,6 +3,7 @@ import { NoteFormModalButton } from './ModalButton';
 import { NoteFormPresentation } from './Presentation';
 import { useAddNewNoteMutation } from '../../app/services/api';
 import { NOTES_FORM_ACTIONS } from '../NotesActions/NotesActionsConstants';
+import { fetchIMGUrl } from '../../utils/fetchImageUrl';
 
 export const NoteForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,8 +39,13 @@ export const NoteForm = () => {
 
   const saveNote = async () => {
     const title = noteFormTitleRef.current.value;
+    let noteImgUrl = '';
+    if (imageFileDataRef.current) {
+      noteImgUrl = await fetchIMGUrl(imageFileDataRef.current);
+    }
+
     try {
-      if (title || description) {
+      if (title || description || imageFileDataRef.current) {
         await addNewNote({
           title,
           description,
@@ -47,6 +53,7 @@ export const NoteForm = () => {
             backgroundColor: bgColor,
             hoverBackgroundColor: hoverBackgroundColor,
           },
+          imageUrl: noteImgUrl,
           states: { isArchived: isNoteArchived.current },
         }).unwrap();
         noteFormTitleRef.current.value = '';
@@ -55,10 +62,14 @@ export const NoteForm = () => {
         setBgColor('#fff');
         setHoverBackgroundColor('#e0e0e0');
         setIsColorPaletteVisible(false);
+        setImgUrl(null);
+        imageFileDataRef.current = null;
         setIsModalOpen(false);
       }
       setBgColor('#fff');
       setHoverBackgroundColor('#e0e0e0');
+      setImgUrl(null);
+      imageFileDataRef.current = null;
       setIsModalOpen(false);
       setIsColorPaletteVisible(false);
     } catch (err) {
