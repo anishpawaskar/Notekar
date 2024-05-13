@@ -4,12 +4,17 @@ export const ColorPalettePresentation = ({
   colors,
   closeColorPalette,
   colorHandler,
+  usingIn,
 }) => {
+  const bottomStyleClassName =
+    usingIn === 'NotesCard' ? 'sm:bottom-[-75px]' : 'sm:bottom-[-35px]';
+
   const colorList = colors.map((color, idx) => {
     const liClassName =
       color.name === 'Default'
         ? 'h-8 w-8 rounded-full flex items-center justify-center border'
         : 'h-8 w-8 rounded-full';
+
     return (
       <li key={idx} style={{ background: color.color }} className={liClassName}>
         {color.name === 'Default' ? (
@@ -38,7 +43,9 @@ export const ColorPalettePresentation = ({
         onClick={closeColorPalette}
         className="w-full h-full absolute top-0 left-0 z-10"
       />
-      <ul className="flex items-center gap-1 flex-wrap bg-white shadow-xl p-2 rounded-lg border absolute bottom-[-75px] left-[-20px] sm:bottom-[-35px] sm:left-[-35px] ">
+      <ul
+        className={`flex items-center gap-1 flex-wrap bg-white shadow-xl p-2 rounded-lg border absolute bottom-[-75px] left-[-20px] ${bottomStyleClassName} sm:left-[-35px] z-20`}
+      >
         {colorList}
       </ul>
     </>
