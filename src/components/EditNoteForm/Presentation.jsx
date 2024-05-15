@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { NotesActions } from '../NotesActions';
 import { ColorPalette } from '../ColorPalette';
 import deleteIcon from './assets/delete-icon.png';
@@ -26,12 +25,10 @@ export const EditNoteFormPresentation = ({
 }) => {
   return (
     <>
-      <Link to="/">
-        <div
-          onClick={saveNote}
-          className="w-full h-full absolute top-0 left-0 z-10 bg-[#79797B] opacity-[0.6]"
-        />
-      </Link>
+      <div
+        onClick={saveNote}
+        className="w-full h-full absolute top-0 left-0 z-10 bg-[#79797B] opacity-[0.6]"
+      />
       <div
         style={{ background: bgColor, borderColor: bgColor }}
         className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] absolute left-[50%] top-[30%] translate-x-[-50%] translate-y-[-50%]  mt-4 rounded-lg shadow-lg z-30 flex flex-col gap-4"
