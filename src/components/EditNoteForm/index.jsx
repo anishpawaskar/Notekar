@@ -27,6 +27,8 @@ export const EditNoteForm = () => {
   const isNoteArchived = useRef(false);
   const imageFileDataRef = useRef(null);
 
+  let isNoteSaved = false;
+
   useEffect(() => {
     if (!isLoading && data?.note) {
       setBgColor(data.note?.theme?.backgroundColor);
@@ -49,26 +51,29 @@ export const EditNoteForm = () => {
     const title = noteFormTitleRef.current.value;
     const description = noteFormDescriptionRef.current.value;
     let noteImgUrl = '';
-    if (imageFileDataRef.current) {
-      noteImgUrl = await fetchIMGUrl(imageFileDataRef.current);
-    }
     try {
-      await updateNote({
-        noteId,
-        body: {
-          title,
-          description,
-          imageUrl: noteImgUrl,
-          theme: {
-            backgroundColor: bgColor,
-            hoverBackgroundColor: hoverBackgroundColor,
+      if (!isNoteSaved) {
+        isNoteSaved = true;
+        if (imageFileDataRef.current) {
+          noteImgUrl = await fetchIMGUrl(imageFileDataRef.current);
+        }
+        await updateNote({
+          noteId,
+          body: {
+            title,
+            description,
+            imageUrl: noteImgUrl,
+            theme: {
+              backgroundColor: bgColor,
+              hoverBackgroundColor: hoverBackgroundColor,
+            },
+            states: {
+              isArchived: isNoteArchived.current,
+            },
           },
-          states: {
-            isArchived: isNoteArchived.current,
-          },
-        },
-      }).unwrap();
-      navigate('/');
+        }).unwrap();
+        navigate('/');
+      }
     } catch (err) {
       console.error(err);
     }

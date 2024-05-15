@@ -22,6 +22,8 @@ export const NoteForm = () => {
   const isNoteArchived = useRef(false);
   const imageFileDataRef = useRef(null);
 
+  let isNoteSaved = false;
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -40,38 +42,41 @@ export const NoteForm = () => {
   const saveNote = async () => {
     const title = noteFormTitleRef.current.value;
     let noteImgUrl = '';
-    if (imageFileDataRef.current) {
-      noteImgUrl = await fetchIMGUrl(imageFileDataRef.current);
-    }
 
     try {
-      if (title || description || imageFileDataRef.current) {
-        await addNewNote({
-          title,
-          description,
-          theme: {
-            backgroundColor: bgColor,
-            hoverBackgroundColor: hoverBackgroundColor,
-          },
-          imageUrl: noteImgUrl,
-          states: { isArchived: isNoteArchived.current },
-        }).unwrap();
-        noteFormTitleRef.current.value = '';
-        setDescription('');
-        noteFormDescriptionRef.current.value = '';
+      if (!isNoteSaved) {
+        isNoteSaved = true;
+        if (imageFileDataRef.current) {
+          noteImgUrl = await fetchIMGUrl(imageFileDataRef.current);
+        }
+        if (title || description || imageFileDataRef.current) {
+          await addNewNote({
+            title,
+            description,
+            theme: {
+              backgroundColor: bgColor,
+              hoverBackgroundColor: hoverBackgroundColor,
+            },
+            imageUrl: noteImgUrl,
+            states: { isArchived: isNoteArchived.current },
+          }).unwrap();
+          noteFormTitleRef.current.value = '';
+          setDescription('');
+          noteFormDescriptionRef.current.value = '';
+          setBgColor('#fff');
+          setHoverBackgroundColor('#e0e0e0');
+          setIsColorPaletteVisible(false);
+          setImgUrl(null);
+          imageFileDataRef.current = null;
+          setIsModalOpen(false);
+        }
         setBgColor('#fff');
         setHoverBackgroundColor('#e0e0e0');
-        setIsColorPaletteVisible(false);
         setImgUrl(null);
         imageFileDataRef.current = null;
         setIsModalOpen(false);
+        setIsColorPaletteVisible(false);
       }
-      setBgColor('#fff');
-      setHoverBackgroundColor('#e0e0e0');
-      setImgUrl(null);
-      imageFileDataRef.current = null;
-      setIsModalOpen(false);
-      setIsColorPaletteVisible(false);
     } catch (err) {
       console.error(err);
     }
