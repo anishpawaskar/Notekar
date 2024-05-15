@@ -64,7 +64,9 @@ export const NoteFormPresentation = ({
             )}
           </div>
         )}
-        <div className="w-full flex flex-col gap-4 px-3 pt-3">
+        <div
+          className={`w-full flex flex-col gap-4 px-3 ${imgUrl ? 'pt-0' : 'pt-3'}`}
+        >
           <input
             ref={noteFormTitleRef}
             onKeyDown={(e) => handleKeyDown(e)}
