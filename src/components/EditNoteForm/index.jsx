@@ -36,7 +36,6 @@ export const EditNoteForm = () => {
       if (data.note?.imageUrl) {
         setImgUrl(data.note?.imageUrl);
         imageFileDataRef.current = data.note?.imageUrl;
-        console.log('from effect', imageFileDataRef);
       }
     }
   }, [data, isLoading]);
