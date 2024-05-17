@@ -41,6 +41,9 @@ export const api = createApi({
       }),
       invalidatesTags: ['Note'],
     }),
+    getLabels: builder.query({
+      query: () => '/labels',
+    }),
   }),
 });
 
@@ -50,4 +53,5 @@ export const {
   useAddNewNoteMutation,
   useUpdateNoteMutation,
   useDeleteNoteMutation,
+  useGetLabelsQuery,
 } = api;
