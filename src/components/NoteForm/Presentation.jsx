@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { NotesActions } from '../NotesActions';
 import { ColorPalette } from '../ColorPalette';
 import deleteIcon from './assets/delete-icon.png';
+import { Labels } from '../Labels';
 
 export const NoteFormPresentation = ({
   handleDescriptionChange,
@@ -89,6 +90,7 @@ export const NoteFormPresentation = ({
             colorHandler={colorHandler}
           />
         )}
+        <Labels />
         <div className="w-full flex justify-between items-center px-3 pb-3">
           <NotesActions
             notesActions={notesActions}

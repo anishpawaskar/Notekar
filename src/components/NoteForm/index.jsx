@@ -6,7 +6,7 @@ import { NOTES_FORM_ACTIONS } from '../NotesActions/NotesActionsConstants';
 import { fetchIMGUrl } from '../../utils/fetchImageUrl';
 
 export const NoteForm = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const [description, setDescription] = useState('');
   const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
   const [bgColor, setBgColor] = useState('#fff');
