@@ -61,6 +61,7 @@ export const NotesCardPresentation = ({
                   <li
                     className="m-0 text-xs bg-[#EBEBEB] px-3 py-1 rounded-xl relative z-50 group"
                     key={label._id}
+                    onClick={(e) => e.preventDefault()}
                   >
                     {label.name}
                     <button
