@@ -44,6 +44,7 @@ export const NoteForm = () => {
   const saveNote = async () => {
     const title = noteFormTitleRef.current.value;
     let noteImgUrl = '';
+    const labels = labelsToAdd.map((label) => label._id);
 
     try {
       if (!isNoteSaved) {
@@ -61,6 +62,7 @@ export const NoteForm = () => {
             },
             imageUrl: noteImgUrl,
             states: { isArchived: isNoteArchived.current },
+            labels,
           }).unwrap();
           noteFormTitleRef.current.value = '';
           setDescription('');
@@ -69,6 +71,7 @@ export const NoteForm = () => {
           setHoverBackgroundColor('#e0e0e0');
           setIsColorPaletteVisible(false);
           setIsLabelsVisible(false);
+          setLabelsToAdd([]);
           setImgUrl(null);
           imageFileDataRef.current = null;
           setIsModalOpen(false);
@@ -77,6 +80,7 @@ export const NoteForm = () => {
         setHoverBackgroundColor('#e0e0e0');
         setImgUrl(null);
         imageFileDataRef.current = null;
+        setLabelsToAdd([]);
         setIsModalOpen(false);
         setIsColorPaletteVisible(false);
         setIsLabelsVisible(false);
