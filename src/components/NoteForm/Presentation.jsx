@@ -100,12 +100,12 @@ export const NoteFormPresentation = ({
             {labelsToAdd.map((label) => {
               return (
                 <li
-                  className="m-0 text-xs bg-[#EBEBEB] px-3 py-1 rounded-xl relative"
+                  className="m-0 text-xs bg-[#EBEBEB] px-3 py-1 rounded-xl relative group"
                   key={label._id}
                 >
                   <button onClick={() => handleRemoveLabel(label._id)}>
                     {label.name}
-                    <span className=" w-4 h-4 absolute right-[-5px] top-[-6px] bg-black text-white text-sm flex items-center justify-center rounded-full">
+                    <span className="hidden w-4 h-4 absolute right-[-5px] top-[-6px] bg-black text-white text-sm items-center justify-center rounded-full group-hover:flex">
                       x
                     </span>
                   </button>
