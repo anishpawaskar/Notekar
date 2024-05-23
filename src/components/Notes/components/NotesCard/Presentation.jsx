@@ -10,7 +10,9 @@ export const NotesCardPresentation = ({
   isColorPaletteVisible,
   closeColorPalette,
   colorHandler,
+  handleRemoveLabel,
 }) => {
+  console.log('note labels', note.labels);
   return (
     <>
       {isColorPaletteVisible && (
@@ -35,6 +37,9 @@ export const NotesCardPresentation = ({
               />
             </div>
           )}
+          {!note.title && !note.description && !note.imageUrl && (
+            <p className="m-0 text-xl">Empty note</p>
+          )}
           {note.title && (
             <p
               className={`font-medium whitespace-pre-wrap break-words max-h-[140px] overflow-hidden px-4 ${note.imageUrl ? 'pt-0' : 'pt-4'}`}
@@ -49,8 +54,30 @@ export const NotesCardPresentation = ({
               {note.description}
             </p>
           )}
-          {!note.title && !note.description && !note.imageUrl && (
-            <p className="m-0 text-xl">Empty note</p>
+          {note.labels.length > 0 && (
+            <ul className="px-4 flex gap-2">
+              {note.labels.slice(0, 3).map((label) => {
+                return (
+                  <li
+                    className="m-0 text-xs bg-[#EBEBEB] px-3 py-1 rounded-xl relative z-50 group"
+                    key={label._id}
+                  >
+                    {label.name}
+                    <button
+                      onClick={(e) => handleRemoveLabel(e, note._id, label._id)}
+                      className="hidden w-4 h-4 absolute right-[-5px] top-[-6px] bg-black text-white text-sm items-center justify-center rounded-full group-hover:flex"
+                    >
+                      x
+                    </button>
+                  </li>
+                );
+              })}
+              {note.labels.length > 3 && (
+                <li className="m-0 text-xs bg-[#EBEBEB] px-3 py-1">
+                  +{note.labels.length - 3}
+                </li>
+              )}
+            </ul>
           )}
           {isColorPaletteVisible && (
             <div

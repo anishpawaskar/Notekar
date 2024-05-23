@@ -53,8 +53,19 @@ export const NotesCard = ({ note, notesActions }) => {
           hoverBackgroundColor: hoverBgColor,
         },
       },
-    });
+    }).unwrap();
   };
+
+  const handleRemoveLabel = async (e, noteId, labelId) => {
+    e.preventDefault();
+    await updateNote({
+      noteId,
+      body: {
+        labelsToDelete: [labelId],
+      },
+    }).unwrap();
+  };
+
   return (
     <NotesCardPresentation
       note={note}
@@ -64,6 +75,7 @@ export const NotesCard = ({ note, notesActions }) => {
       isColorPaletteVisible={isColorPaletteVisible}
       closeColorPalette={closeColorPalette}
       colorHandler={colorHandler}
+      handleRemoveLabel={handleRemoveLabel}
     />
   );
 };
