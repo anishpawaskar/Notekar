@@ -13,6 +13,8 @@ export const NoteForm = () => {
   const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
   const [imgUrl, setImgUrl] = useState(null);
   const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
+  const [labelsToAdd, setLabelsToAdd] = useState([]);
+  const [isLabelsVisible, setIsLabelsVisible] = useState(false);
 
   const [addNewNote] = useAddNewNoteMutation();
 
@@ -66,6 +68,7 @@ export const NoteForm = () => {
           setBgColor('#fff');
           setHoverBackgroundColor('#e0e0e0');
           setIsColorPaletteVisible(false);
+          setIsLabelsVisible(false);
           setImgUrl(null);
           imageFileDataRef.current = null;
           setIsModalOpen(false);
@@ -76,6 +79,7 @@ export const NoteForm = () => {
         imageFileDataRef.current = null;
         setIsModalOpen(false);
         setIsColorPaletteVisible(false);
+        setIsLabelsVisible(false);
       }
     } catch (err) {
       console.error(err);
@@ -100,6 +104,11 @@ export const NoteForm = () => {
 
       case 'changeBackground': {
         setIsColorPaletteVisible(true);
+        break;
+      }
+
+      case 'addLabel': {
+        setIsLabelsVisible(true);
         break;
       }
     }
@@ -140,6 +149,34 @@ export const NoteForm = () => {
     imageFileDataRef.current = null;
   };
 
+  const handleLabel = (label, labelCheckboxRef) => {
+    const labelId = label._id;
+
+    labelCheckboxRef.current.checked = !labelCheckboxRef.current.checked;
+    const isLabelAlreadyAdded = labelsToAdd.find(
+      (label) => label._id === labelId,
+    );
+
+    if (isLabelAlreadyAdded) {
+      const newLabelsToAdd = labelsToAdd.filter(
+        (label) => label._id !== labelId,
+      );
+      setLabelsToAdd(newLabelsToAdd);
+    } else {
+      setLabelsToAdd([...labelsToAdd, label]);
+    }
+  };
+
+  const handleRemoveLabel = (labelId) => {
+    const newLabelsToAdd = labelsToAdd.filter((label) => label._id !== labelId);
+    setLabelsToAdd(newLabelsToAdd);
+    setIsLabelsVisible(false);
+  };
+
+  const closeLabels = () => {
+    setIsLabelsVisible(false);
+  };
+
   if (!isModalOpen) {
     return (
       <NoteFormModalButton
@@ -171,6 +208,11 @@ export const NoteForm = () => {
       handleMouseEnter={handleMouseEnter}
       handleMouseLeave={handleMouseLeave}
       imageDeleteHandler={imageDeleteHandler}
+      handleLabel={handleLabel}
+      labelsToAdd={labelsToAdd}
+      handleRemoveLabel={handleRemoveLabel}
+      isLabelsVisible={isLabelsVisible}
+      closeLabels={closeLabels}
     />
   );
 };
