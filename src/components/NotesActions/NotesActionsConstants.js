@@ -28,6 +28,13 @@ export const NOTES_EDIT_FORM_ACTIONS = [
   },
   {
     id: '4',
+    name: 'Add Label',
+    type: 'button',
+    imgUrl: labelIcon,
+    actionType: 'addLabel',
+  },
+  {
+    id: '5',
     name: 'Delete',
     type: 'button',
     imgUrl: deleteIcon,

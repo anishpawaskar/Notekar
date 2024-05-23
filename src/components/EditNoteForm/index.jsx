@@ -3,6 +3,7 @@ import { EditNoteFormPresentation } from './Presentation';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   useDeleteNoteMutation,
+  useGetLabelsQuery,
   useGetNoteQuery,
   useUpdateNoteMutation,
 } from '../../app/services/api';
@@ -21,11 +22,14 @@ export const EditNoteForm = () => {
   const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
   const [imgUrl, setImgUrl] = useState(null);
   const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
+  const [noteLabels, setNoteLabels] = useState([]);
+  const [isLabelsVisible, setIsLabelsVisible] = useState(false);
 
   const noteFormTitleRef = useRef(null);
   const noteFormDescriptionRef = useRef(null);
   const isNoteArchived = useRef(false);
   const imageFileDataRef = useRef(null);
+  const labelsToDeleteRef = useRef([]);
 
   let isNoteSaved = false;
 
@@ -33,6 +37,7 @@ export const EditNoteForm = () => {
     if (!isLoading && data?.note) {
       setBgColor(data.note?.theme?.backgroundColor);
       setHoverBackgroundColor(data.note?.theme?.hoverBackgroundColor);
+      setNoteLabels(data.note?.labels);
       if (data.note?.imageUrl) {
         setImgUrl(data.note?.imageUrl);
         imageFileDataRef.current = data.note?.imageUrl;
@@ -50,6 +55,11 @@ export const EditNoteForm = () => {
     const title = noteFormTitleRef.current.value;
     const description = noteFormDescriptionRef.current.value;
     let noteImgUrl = '';
+    const uniqueLablesToAdd = noteLabels.filter((label) => {
+      return !data.note.labels.some((noteLabel) => label._id === noteLabel._id);
+    });
+    const labels = uniqueLablesToAdd.map((label) => label._id);
+
     try {
       if (!isNoteSaved) {
         isNoteSaved = true;
@@ -69,6 +79,8 @@ export const EditNoteForm = () => {
             states: {
               isArchived: isNoteArchived.current,
             },
+            labelsToAdd: labels,
+            labelsToDelete: labelsToDeleteRef.current,
           },
         }).unwrap();
         navigate('/');
@@ -94,6 +106,12 @@ export const EditNoteForm = () => {
 
       case 'delete': {
         await deleteNote(noteId).unwrap();
+        break;
+      }
+
+      case 'addLabel': {
+        e.preventDefault();
+        setIsLabelsVisible(true);
         break;
       }
     }
@@ -134,6 +152,47 @@ export const EditNoteForm = () => {
     imageFileDataRef.current = null;
   };
 
+  const handleLabel = (label, labelCheckboxRef) => {
+    const labelId = label._id;
+
+    labelCheckboxRef.current.checked = !labelCheckboxRef.current.checked;
+    const isLabelAlreadyAdded = noteLabels.find(
+      (label) => label._id === labelId,
+    );
+
+    const labelToDelete = data.note.labels.find(
+      (label) => label._id === labelId,
+    );
+
+    if (labelToDelete) {
+      labelsToDeleteRef.current.push(labelId);
+    }
+
+    if (isLabelAlreadyAdded) {
+      const newNoteLabels = noteLabels.filter((label) => label._id !== labelId);
+      setNoteLabels(newNoteLabels);
+    } else {
+      setNoteLabels([...noteLabels, label]);
+    }
+  };
+
+  const handleRemoveLabel = (labelId) => {
+    const newNoteLabels = noteLabels.filter((label) => label._id !== labelId);
+    setNoteLabels(newNoteLabels);
+    setIsLabelsVisible(false);
+    const labelToDelete = data.note?.labels.find(
+      (label) => label._id === labelId,
+    );
+
+    if (labelToDelete) {
+      labelsToDeleteRef.current.push(labelId);
+    }
+  };
+
+  const closeLabels = () => {
+    setIsLabelsVisible(false);
+  };
+
   if (isLoading) {
     return <h1 className="mt-4 text-center">Loading....</h1>;
   }
@@ -159,6 +218,11 @@ export const EditNoteForm = () => {
       handleMouseEnter={handleMouseEnter}
       handleMouseLeave={handleMouseLeave}
       imageDeleteHandler={imageDeleteHandler}
+      noteLabels={noteLabels}
+      handleLabel={handleLabel}
+      closeLabels={closeLabels}
+      isLabelsVisible={isLabelsVisible}
+      handleRemoveLabel={handleRemoveLabel}
     />
   );
 };

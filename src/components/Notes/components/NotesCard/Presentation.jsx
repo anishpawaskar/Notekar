@@ -12,7 +12,6 @@ export const NotesCardPresentation = ({
   colorHandler,
   handleRemoveLabel,
 }) => {
-  console.log('note labels', note.labels);
   return (
     <>
       {isColorPaletteVisible && (
