@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
 import { NotesActions } from '../NotesActions';
 import { ColorPalette } from '../ColorPalette';
 import deleteIcon from './assets/delete-icon.png';
@@ -43,7 +42,7 @@ export const NoteFormPresentation = ({
       />
       <div
         style={{ background: bgColor }}
-        className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] m-auto mt-4 rounded-lg shadow-lg border relative z-30 flex flex-col gap-4 transition-all ease-in duration-500"
+        className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] rounded-lg shadow-lg border relative z-30 flex flex-col gap-4 transition-all ease-in duration-500"
       >
         {imgUrl && (
           <div
@@ -136,7 +135,6 @@ export const NoteFormPresentation = ({
           </button>
         </div>
       </div>
-      <Outlet />
     </>
   );
 };
