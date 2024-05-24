@@ -1,5 +1,6 @@
 import { NotesActions } from '../NotesActions';
 import { ColorPalette } from '../ColorPalette';
+import { Labels } from '../Labels/index';
 import deleteIcon from './assets/delete-icon.png';
 
 export const EditNoteFormPresentation = ({
@@ -22,6 +23,11 @@ export const EditNoteFormPresentation = ({
   handleMouseEnter,
   handleMouseLeave,
   imageDeleteHandler,
+  noteLabels,
+  handleLabel,
+  closeLabels,
+  isLabelsVisible,
+  handleRemoveLabel,
 }) => {
   return (
     <>
@@ -77,11 +83,25 @@ export const EditNoteFormPresentation = ({
             placeholder="Take a note..."
           />
         </div>
-        {isColorPaletteVisible && (
-          <ColorPalette
-            closeColorPalette={closeColorPalette}
-            colorHandler={colorHandler}
-          />
+        {noteLabels.length > 0 && (
+          <ul className="px-3 flex gap-2 relative z-50">
+            {noteLabels.map((label) => {
+              return (
+                <li
+                  className="m-0 text-xs bg-[#EBEBEB] px-3 py-1 rounded-xl relative group"
+                  key={label._id}
+                >
+                  {label.name}
+                  <button
+                    onClick={() => handleRemoveLabel(label._id)}
+                    className="hidden w-4 h-4 absolute right-[-5px] top-[-6px] bg-black text-white text-sm items-center justify-center rounded-full group-hover:flex"
+                  >
+                    x
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         )}
         <div className="w-full flex justify-between items-center px-3 pb-3">
           <NotesActions
@@ -96,6 +116,19 @@ export const EditNoteFormPresentation = ({
             Close
           </button>
         </div>
+        {isColorPaletteVisible && (
+          <ColorPalette
+            closeColorPalette={closeColorPalette}
+            colorHandler={colorHandler}
+          />
+        )}
+        {isLabelsVisible && (
+          <Labels
+            handleLabel={handleLabel}
+            labelsToAdd={noteLabels}
+            closeLabels={closeLabels}
+          />
+        )}
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { NotesActions } from '../NotesActions';
 import { ColorPalette } from '../ColorPalette';
 import deleteIcon from './assets/delete-icon.png';
+import { Labels } from '../Labels';
 
 export const NoteFormPresentation = ({
   handleDescriptionChange,
@@ -24,6 +25,11 @@ export const NoteFormPresentation = ({
   handleMouseEnter,
   handleMouseLeave,
   imageDeleteHandler,
+  handleLabel,
+  labelsToAdd,
+  handleRemoveLabel,
+  isLabelsVisible,
+  closeLabels,
 }) => {
   useEffect(() => {
     noteFormDescriptionRef.current.focus();
@@ -87,6 +93,33 @@ export const NoteFormPresentation = ({
           <ColorPalette
             closeColorPalette={closeColorPalette}
             colorHandler={colorHandler}
+          />
+        )}
+        {labelsToAdd.length > 0 && (
+          <ul className="px-3 flex gap-2 relative z-50">
+            {labelsToAdd.map((label) => {
+              return (
+                <li
+                  className="m-0 text-xs bg-[#EBEBEB] px-3 py-1 rounded-xl relative group"
+                  key={label._id}
+                >
+                  {label.name}
+                  <button
+                    onClick={() => handleRemoveLabel(label._id)}
+                    className="hidden w-4 h-4 absolute right-[-5px] top-[-6px] bg-black text-white text-sm items-center justify-center rounded-full group-hover:flex"
+                  >
+                    x
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+        {isLabelsVisible && (
+          <Labels
+            handleLabel={handleLabel}
+            labelsToAdd={labelsToAdd}
+            closeLabels={closeLabels}
           />
         )}
         <div className="w-full flex justify-between items-center px-3 pb-3">
