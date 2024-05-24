@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
 
 export const NoteFormModalButton = ({
   noteFormModalButtonRef,
@@ -12,17 +11,16 @@ export const NoteFormModalButton = ({
 
   return (
     <>
-      <div className="w-[400px] sm:w-[600px] max-[450px]:w-[300px] m-auto mt-4 ">
+      <div className="w-[400px] sm:w-[600px] max-[450px]:w-[300px]">
         <input
           type="text"
           onChange={(e) => openModalOnInput(e)}
           onClick={openModal}
           ref={noteFormModalButtonRef}
-          className="w-full border p-3 shadow-lg focus:outline-none rounded"
+          className="w-full border py-2 px-3 shadow-lg focus:outline-none rounded"
           placeholder="Take a note..."
         />
       </div>
-      <Outlet />
     </>
   );
 };
