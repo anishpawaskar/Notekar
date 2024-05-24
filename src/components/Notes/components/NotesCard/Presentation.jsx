@@ -20,12 +20,15 @@ export const NotesCardPresentation = ({
           className="w-full h-full absolute top-0 left-0 z-10"
         ></div>
       )}
-      <Link className="block max-w-[250px] mt-4 mx-auto" to={`/${note._id}`}>
+      <Link
+        className="block w-[400px] sm:w-[600px] max-[450px]:w-[300px] mt-4 mx-auto"
+        to={`/${note._id}`}
+      >
         <div
           style={{
             background: bgColor,
           }}
-          className="max-w-[250px] max-h-[300px]  flex flex-col gap-4 mt-4 mx-auto rounded-md shadow-md border relative"
+          className="w-full max-h-[300px]  flex flex-col gap-4 mt-4 mx-auto rounded-md shadow-md border relative"
         >
           {note.imageUrl && (
             <div>
