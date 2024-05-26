@@ -9,7 +9,7 @@ export const useGetActiveLink = () => {
   } else if (location.search === '?archive=true') {
     activeLink = 'Archive';
   } else {
-    const label = location.search.split('=')[1].split('%20').join(' ');
+    const label = location?.search?.split('=')[1]?.split('%20')?.join(' ');
     activeLink = label;
   }
 
