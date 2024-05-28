@@ -8,7 +8,7 @@ export const api = createApi({
   endpoints: (builder) => ({
     getNotes: builder.query({
       query: () => '/notes',
-      providesTags: ['Note'],
+      providesTags: ['Note', 'Label'],
     }),
     getNote: builder.query({
       query: (noteId) => ({
@@ -43,6 +43,30 @@ export const api = createApi({
     }),
     getLabels: builder.query({
       query: () => '/labels',
+      providesTags: ['Label'],
+    }),
+    addNewLabel: builder.mutation({
+      query: (body) => ({
+        url: '/labels',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Label'],
+    }),
+    deleteLabel: builder.mutation({
+      query: (labelId) => ({
+        url: `/labels/${labelId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Label'],
+    }),
+    updateLabel: builder.mutation({
+      query: ({ labelId, body }) => ({
+        url: `/labels/${labelId}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Label'],
     }),
   }),
 });
@@ -54,4 +78,7 @@ export const {
   useUpdateNoteMutation,
   useDeleteNoteMutation,
   useGetLabelsQuery,
+  useAddNewLabelMutation,
+  useDeleteLabelMutation,
+  useUpdateLabelMutation,
 } = api;
