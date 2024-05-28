@@ -40,7 +40,7 @@ export const EditLabelsPresentation = ({
           <input
             readOnly={isCreatingLabel ? false : true}
             ref={createLabelInputRef}
-            className={`${isCreatingLabel ? 'focus:outline-none focus:border-b focus:border-b-[#afafaf]' : 'outline-none'} placeholder:text-sm`}
+            className={`${isCreatingLabel ? 'focus:outline-none focus:border-b focus:border-b-[#afafaf]' : 'outline-none'} placeholder:text-sm w-full text-sm`}
             type="text"
             placeholder="Create new label"
           />
@@ -52,7 +52,7 @@ export const EditLabelsPresentation = ({
           </button>
         </div>
       </div>
-      <ul className="p-4 pt-0 flex flex-col gap-2 max-h-96">
+      <ul className="p-4 pt-0 flex flex-col gap-2 max-h-96 overflow-auto">
         {labels.map((label) => {
           return (
             <LabelsList

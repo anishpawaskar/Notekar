@@ -1,16 +1,31 @@
 import { useRef, useState } from 'react';
 import { LabelsListPresentation } from './Presentation';
+import {
+  useDeleteLabelMutation,
+  useUpdateLabelMutation,
+} from '../../../../app/services/api';
 
 export const LabelsList = ({ label, labelToEditId, setLabelToEditId }) => {
   const [isHover, setIsHover] = useState(false);
 
+  const [updateLabel] = useUpdateLabelMutation();
+  const [deleteLabel] = useDeleteLabelMutation();
+
   const labelInputRef = useRef(null);
 
-  const handleUpdateLabel = (labelId, inputRef) => {
-    console.log(
-      'aata update kar ani editable la false kar',
-      inputRef.current.value,
-    );
+  const handleUpdateLabel = async (labelId, inputRef) => {
+    if (
+      label.name !== inputRef.current.value ||
+      inputRef.current.value !== ''
+    ) {
+      await updateLabel({
+        labelId,
+        body: {
+          name: inputRef.current.value,
+        },
+      }).unwrap();
+      setLabelToEditId(null);
+    }
     setLabelToEditId(null);
   };
 
@@ -20,8 +35,8 @@ export const LabelsList = ({ label, labelToEditId, setLabelToEditId }) => {
     }
   };
 
-  const handleDeleteLabel = (labelId) => {
-    console.log('label delete kar', labelId);
+  const handleDeleteLabel = async (labelId) => {
+    await deleteLabel(labelId).unwrap();
   };
 
   const handleMouseEnter = () => {

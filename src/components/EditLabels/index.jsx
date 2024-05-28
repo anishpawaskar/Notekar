@@ -1,12 +1,17 @@
 import { useRef, useState } from 'react';
 import { EditLabelsPresentation } from './Presentation';
-import { useGetLabelsQuery } from '../../app/services/api';
+import {
+  useAddNewLabelMutation,
+  useGetLabelsQuery,
+} from '../../app/services/api';
 
 export const EditLabels = () => {
   const [labelToEditId, setLabelToEditId] = useState(null);
   const [isCreatingLabel, setIsCreatingLabel] = useState(true);
 
   const { data, isLoading } = useGetLabelsQuery();
+  const [addNewLabel] = useAddNewLabelMutation();
+
   const createLabelInputRef = useRef(null);
 
   const handleToggle = () => {
@@ -14,8 +19,14 @@ export const EditLabels = () => {
     setLabelToEditId(null);
   };
 
-  const handleLabelCreation = () => {
-    console.log(createLabelInputRef.current.value);
+  const handleLabelCreation = async () => {
+    if (createLabelInputRef.current.value !== '') {
+      await addNewLabel({
+        name: createLabelInputRef.current.value,
+      }).unwrap();
+
+      createLabelInputRef.current.value = '';
+    }
   };
 
   if (isLoading) {
