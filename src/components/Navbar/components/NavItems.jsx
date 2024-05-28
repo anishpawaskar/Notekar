@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 
-export const NavItems = ({ navlink, activeLink }) => {
+export const NavItems = ({ navlink, activeLink, handleEditLabel }) => {
   return navlink.name === 'Edit labels' ? (
     <li className="font-medium hover:border-b-2 hover:border-b-[--primary-color]">
-      <button>{navlink.name}</button>
+      <button onClick={handleEditLabel}>{navlink.name}</button>
     </li>
   ) : (
     <Link

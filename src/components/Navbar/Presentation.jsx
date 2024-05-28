@@ -2,6 +2,7 @@ import notkarLogo from './assets/logo-main.png';
 import hamburgerIcon from './assets/hamburger-icon.png';
 import { NavItems } from './components/NavItems';
 import { MobileNavbar } from './components/MobileNavbar';
+import { EditLabels } from '../EditLabels';
 
 export const NavbarPresentation = ({
   navlinks,
@@ -9,6 +10,8 @@ export const NavbarPresentation = ({
   isMobileNavbarVisible,
   handleEditLabel,
   handleNavlink,
+  isEditLabelsVisible,
+  closeEditLabels,
 }) => {
   return (
     <nav className="flex px-4 py-3 justify-between items-center">
@@ -24,6 +27,7 @@ export const NavbarPresentation = ({
                 key={navlink.id}
                 navlink={navlink}
                 activeLink={activeLink}
+                handleEditLabel={handleEditLabel}
               />
             );
           })}
@@ -42,6 +46,7 @@ export const NavbarPresentation = ({
           <img src={hamburgerIcon} alt="menu" />
         </button>
       </div>
+      {isEditLabelsVisible && <EditLabels closeEditLabels={closeEditLabels} />}
       <div className="">
         <button className="h-9 w-9 rounded-full bg-[--primary-color]">A</button>
       </div>

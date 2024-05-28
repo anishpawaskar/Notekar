@@ -5,7 +5,7 @@ import {
   useGetLabelsQuery,
 } from '../../app/services/api';
 
-export const EditLabels = () => {
+export const EditLabels = ({ closeEditLabels }) => {
   const [labelToEditId, setLabelToEditId] = useState(null);
   const [isCreatingLabel, setIsCreatingLabel] = useState(true);
 
@@ -43,6 +43,7 @@ export const EditLabels = () => {
       setIsCreatingLabel={setIsCreatingLabel}
       handleToggle={handleToggle}
       handleLabelCreation={handleLabelCreation}
+      closeEditLabels={closeEditLabels}
     />
   );
 };

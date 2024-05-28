@@ -6,9 +6,15 @@ import { useState } from 'react';
 export const Navbar = () => {
   const [activeLink] = useGetActiveLink();
   const [isMobileNavbarVisible, setIsMobileNavbarVisible] = useState(false);
+  const [isEditLabelsVisible, setIsEditLabelsVisible] = useState(false);
 
   const handleEditLabel = () => {
-    setIsMobileNavbarVisible((prevState) => !prevState);
+    setIsEditLabelsVisible((prevState) => !prevState);
+    setIsMobileNavbarVisible(false);
+  };
+
+  const closeEditLabels = () => {
+    setIsEditLabelsVisible(false);
   };
 
   const handleNavlink = () => {
@@ -22,6 +28,8 @@ export const Navbar = () => {
       isMobileNavbarVisible={isMobileNavbarVisible}
       handleEditLabel={handleEditLabel}
       handleNavlink={handleNavlink}
+      isEditLabelsVisible={isEditLabelsVisible}
+      closeEditLabels={closeEditLabels}
     />
   );
 };
