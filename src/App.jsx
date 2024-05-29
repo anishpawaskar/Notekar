@@ -4,16 +4,17 @@ import { Navbar } from './components/Navbar';
 import { Notes } from './components/Notes';
 import { EditNoteForm } from './components/EditNoteForm';
 import { Layout } from './components/Layout';
+import { Login } from './components/Login';
 
 function App() {
   return (
     <>
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/notes" element={<Layout />}>
           <Route index element={<Notes />} />
-          <Route path="/:noteId" element={<EditNoteForm />} />
+          <Route path="/notes/:noteId" element={<EditNoteForm />} />
         </Route>
+        <Route path="/" element={<Login />} />
       </Routes>
     </>
   );
