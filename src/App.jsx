@@ -5,6 +5,7 @@ import { Notes } from './components/Notes';
 import { EditNoteForm } from './components/EditNoteForm';
 import { Layout } from './components/Layout';
 import { Login } from './components/Login';
+import { Register } from './components/Register';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
           <Route index element={<Notes />} />
           <Route path="/notes/:noteId" element={<EditNoteForm />} />
         </Route>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Register />} />
       </Routes>
     </>
   );
