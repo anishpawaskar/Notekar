@@ -2,7 +2,7 @@ export const NAV_LINKS = [
   {
     id: '1',
     name: 'Notes',
-    to: '/',
+    to: '/notes',
   },
   {
     id: '2',
@@ -11,6 +11,6 @@ export const NAV_LINKS = [
   {
     id: '3',
     name: 'Archive',
-    to: '/?archive=true',
+    to: '/notes/?archive=true',
   },
 ];

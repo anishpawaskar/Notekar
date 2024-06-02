@@ -75,6 +75,13 @@ export const api = createApi({
         body,
       }),
     }),
+    loginUser: builder.mutation({
+      query: (body) => ({
+        url: '/auth/login',
+        method: 'POST',
+        body,
+      }),
+    }),
     getSelfDetails: builder.query({
       query: () => '/self',
     }),
@@ -92,5 +99,6 @@ export const {
   useDeleteLabelMutation,
   useUpdateLabelMutation,
   useRegistersUserMutation,
+  useLoginUserMutation,
   useGetSelfDetailsQuery,
 } = api;
