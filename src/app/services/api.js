@@ -75,6 +75,9 @@ export const api = createApi({
         body,
       }),
     }),
+    getSelfDetails: builder.query({
+      query: () => '/self',
+    }),
   }),
 });
 
@@ -89,4 +92,5 @@ export const {
   useDeleteLabelMutation,
   useUpdateLabelMutation,
   useRegistersUserMutation,
+  useGetSelfDetailsQuery,
 } = api;
