@@ -83,7 +83,7 @@ export const EditNoteForm = () => {
             labelsToDelete: labelsToDeleteRef.current,
           },
         }).unwrap();
-        navigate('/');
+        navigate('/notes');
       }
     } catch (err) {
       console.error(err);
@@ -106,6 +106,7 @@ export const EditNoteForm = () => {
 
       case 'delete': {
         await deleteNote(noteId).unwrap();
+        navigate('/notes');
         break;
       }
 

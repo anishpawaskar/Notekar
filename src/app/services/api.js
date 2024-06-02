@@ -68,6 +68,13 @@ export const api = createApi({
       }),
       invalidatesTags: ['Label'],
     }),
+    registersUser: builder.mutation({
+      query: (body) => ({
+        url: '/auth/register',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
@@ -81,4 +88,5 @@ export const {
   useAddNewLabelMutation,
   useDeleteLabelMutation,
   useUpdateLabelMutation,
+  useRegistersUserMutation,
 } = api;

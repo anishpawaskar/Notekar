@@ -1,13 +1,18 @@
 import { useRef } from 'react';
 import { RegisterPresentation } from './Presentation';
+import { useRegistersUserMutation } from '../../app/services/api';
+import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
+  const [registerUser, { isLoading, isError }] = useRegistersUserMutation();
+  const navigate = useNavigate();
+
   const firstNameInputRef = useRef(null);
   const lastNameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
 
-  const handleRegistration = (e) => {
+  const handleRegistration = async (e) => {
     e.preventDefault();
     const firstName = firstNameInputRef.current.value;
     const lastName = lastNameInputRef.current.value;
@@ -15,9 +20,13 @@ export const Register = () => {
     const password = passwordInputRef.current.value;
 
     if (firstName && lastName && email && password) {
-      console.log(
-        'do api call to register and navigate user to /notes after successfull res',
-      );
+      await registerUser({
+        firstName,
+        lastName,
+        email,
+        password,
+      }).unwrap();
+      navigate('/notes');
     }
   };
   return (
@@ -28,6 +37,8 @@ export const Register = () => {
         emailInputRef,
         passwordInputRef,
       }}
+      isLoading={isLoading}
+      isError={isError}
       handleRegistration={handleRegistration}
     />
   );
