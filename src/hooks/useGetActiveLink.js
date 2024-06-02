@@ -4,7 +4,7 @@ export const useGetActiveLink = () => {
   const location = useLocation();
   let activeLink;
 
-  if (location.pathname === '/' && location.search === '') {
+  if (location.pathname === '/notes' && location.search === '') {
     activeLink = 'Notes';
   } else if (location.search === '?archive=true') {
     activeLink = 'Archive';
