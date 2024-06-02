@@ -6,6 +6,8 @@ export const LoginPresentation = ({
   emailInputRef,
   passwordInputRef,
   handleLogin,
+  isLoading,
+  isError,
 }) => {
   return (
     <div>
@@ -59,11 +61,16 @@ export const LoginPresentation = ({
               Forgot your password?
             </Link>
           </div>
-          {/* <p className="text-sm text-red-700 font-medium">
-            Login or password is invalid.
-          </p> */}
+          {isError && (
+            <p className="text-sm text-red-700 font-medium">
+              Email or password is invalid.
+            </p>
+          )}
           <div>
-            <button className="bg-[--primary-color] rounded py-2 text-white font-medium max-[450px]:bg-white max-[450px]:text-black w-full">
+            <button
+              disabled={isLoading ? true : false}
+              className="bg-[--primary-color] rounded py-2 text-white font-medium max-[450px]:bg-white max-[450px]:text-black w-full"
+            >
               Log In
             </button>
             <p className="mt-2 text-sm">

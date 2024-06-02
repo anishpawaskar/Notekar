@@ -9,7 +9,7 @@ export const Login = () => {
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
 
-  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [loginUser, { isLoading, isError }] = useLoginUserMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,6 +37,8 @@ export const Login = () => {
       emailInputRef={emailInputRef}
       passwordInputRef={passwordInputRef}
       handleLogin={handleLogin}
+      isLoading={isLoading}
+      isError={isError}
     />
   );
 };
