@@ -22,7 +22,7 @@ export const NotesCardPresentation = ({
       )}
       <Link
         className="block w-[400px] sm:w-[600px] max-[450px]:w-[300px] mt-4 mx-auto"
-        to={`/${note._id}`}
+        to={`/notes/${note._id}`}
       >
         <div
           style={{
