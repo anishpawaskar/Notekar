@@ -15,7 +15,7 @@ export const NotesActionsPresentation = ({
         />
       </button>
     ) : (
-      <Link to="/">
+      <Link to="/notes">
         <button onClick={(e) => handleActions(e, action.actionType)}>
           <img
             className="h-[1.12rem] hover:scale-125"
