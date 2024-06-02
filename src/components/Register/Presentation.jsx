@@ -2,7 +2,11 @@ import { Link } from 'react-router-dom';
 import authBgImg from './assets/auth-bg.jpg';
 import logoMain from './assets/logo-main.png';
 
-export const RegisterPresentation = ({ refs, handleRegistration }) => {
+export const RegisterPresentation = ({
+  refs,
+  isLoading,
+  handleRegistration,
+}) => {
   const {
     firstNameInputRef,
     lastNameInputRef,
@@ -89,7 +93,10 @@ export const RegisterPresentation = ({ refs, handleRegistration }) => {
           {/* <p className="text-sm text-red-700 font-medium">
             Email is already taken.
           </p> */}
-          <button className="bg-[--primary-color] rounded py-2 text-white font-medium max-[450px]:bg-white max-[450px]:text-black">
+          <button
+            disabled={isLoading ? true : false}
+            className="bg-[--primary-color] rounded py-2 text-white font-medium max-[450px]:bg-white max-[450px]:text-black"
+          >
             Register
           </button>
         </form>
