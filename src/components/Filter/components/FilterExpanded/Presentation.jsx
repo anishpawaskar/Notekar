@@ -23,7 +23,7 @@ export const FilterExpandedPresentation = ({
         <ul>
           <Link
             className={`${activeLink === 'Notes' && 'bg-[#e0e0e0]'} block`}
-            to="/"
+            to="/notes"
           >
             <li className="w-full hover:bg-[#e0e0e0]">
               <button
