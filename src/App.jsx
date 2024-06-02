@@ -6,17 +6,20 @@ import { EditNoteForm } from './components/EditNoteForm';
 import { Layout } from './components/Layout';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
+import { PrivateRoute } from './components/Utils Components/PrivateRoute';
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/notes" element={<Layout />}>
-          <Route index element={<Notes />} />
-          <Route path="/notes/:noteId" element={<EditNoteForm />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/notes" element={<Layout />}>
+            <Route index element={<Notes />} />
+            <Route path="/notes/:noteId" element={<EditNoteForm />} />
+          </Route>
         </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Register />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   );
