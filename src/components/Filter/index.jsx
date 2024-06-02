@@ -10,7 +10,6 @@ export const Filter = () => {
   };
 
   const closeFilterModal = () => {
-    console.log('calling me');
     setIsFilterOpen(false);
   };
 

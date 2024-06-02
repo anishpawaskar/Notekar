@@ -7,7 +7,6 @@ export const FilterExpandedPresentation = ({
   closeFilterModal,
   activeLink,
 }) => {
-  console.log('active', activeLink);
   return (
     <>
       <div
