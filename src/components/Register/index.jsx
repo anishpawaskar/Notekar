@@ -4,7 +4,7 @@ import { useRegistersUserMutation } from '../../app/services/api';
 import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
-  const [registerUser, { isLoading }] = useRegistersUserMutation();
+  const [registerUser, { isLoading, isError }] = useRegistersUserMutation();
   const navigate = useNavigate();
 
   const firstNameInputRef = useRef(null);
@@ -38,6 +38,7 @@ export const Register = () => {
         passwordInputRef,
       }}
       isLoading={isLoading}
+      isError={isError}
       handleRegistration={handleRegistration}
     />
   );

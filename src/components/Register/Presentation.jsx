@@ -5,6 +5,7 @@ import logoMain from './assets/logo-main.png';
 export const RegisterPresentation = ({
   refs,
   isLoading,
+  isError,
   handleRegistration,
 }) => {
   const {
@@ -90,9 +91,11 @@ export const RegisterPresentation = ({
               required
             />
           </div>
-          {/* <p className="text-sm text-red-700 font-medium">
-            Email is already taken.
-          </p> */}
+          {isError && (
+            <p className="text-sm text-red-700 font-medium">
+              Email is already taken.
+            </p>
+          )}
           <button
             disabled={isLoading ? true : false}
             className="bg-[--primary-color] rounded py-2 text-white font-medium max-[450px]:bg-white max-[450px]:text-black"
