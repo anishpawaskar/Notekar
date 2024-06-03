@@ -8,7 +8,6 @@ export const api = createApi({
   endpoints: (builder) => ({
     getNotes: builder.query({
       query: (query) => {
-        console.log('query', query);
         const endpoint = query === '' ? '/notes' : `/notes/${query}`;
         return {
           url: endpoint,
