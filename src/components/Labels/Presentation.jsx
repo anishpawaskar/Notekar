@@ -13,7 +13,7 @@ export const LabelsPresentation = ({
         onClick={closeLabels}
         className="w-full h-full absolute top-0 left-0 z-10 rounded-lg"
       />
-      <div className="w-56 shadow-xl rounded border flex flex-col gap-2 absolute bottom-[-85px] left-24 z-50 bg-white">
+      <div className="w-56 shadow-xl rounded border flex flex-col gap-2 absolute bottom-[-135px] left-24 z-50 bg-white max-[450px]:left-16">
         <div className="p-3 flex flex-col gap-1">
           <p className="text-sm font-medium">Label note</p>
           <div className="flex justify-between">
