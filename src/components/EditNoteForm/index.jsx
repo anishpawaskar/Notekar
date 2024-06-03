@@ -27,7 +27,7 @@ export const EditNoteForm = () => {
 
   const noteFormTitleRef = useRef(null);
   const noteFormDescriptionRef = useRef(null);
-  const isNoteArchived = useRef(false);
+  const isNoteArchived = useRef(null);
   const imageFileDataRef = useRef(null);
   const labelsToDeleteRef = useRef([]);
 
@@ -42,6 +42,7 @@ export const EditNoteForm = () => {
         setImgUrl(data.note?.imageUrl);
         imageFileDataRef.current = data.note?.imageUrl;
       }
+      isNoteArchived.current = data.note.states.isArchived;
     }
   }, [data, isLoading]);
 
@@ -99,7 +100,7 @@ export const EditNoteForm = () => {
       }
 
       case 'archive': {
-        isNoteArchived.current = true;
+        isNoteArchived.current = isNoteArchived.current ? false : true;
         await saveNote();
         break;
       }
