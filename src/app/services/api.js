@@ -7,7 +7,13 @@ export const api = createApi({
   tagTypes: ['Note'],
   endpoints: (builder) => ({
     getNotes: builder.query({
-      query: () => '/notes',
+      query: (query) => {
+        console.log('query', query);
+        const endpoint = query === '' ? '/notes' : `/notes/${query}`;
+        return {
+          url: endpoint,
+        };
+      },
       providesTags: ['Note', 'Label'],
     }),
     getNote: builder.query({
