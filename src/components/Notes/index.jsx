@@ -10,6 +10,7 @@ export const Notes = () => {
 
   return (
     <NotesPresentation
+      location={location}
       data={data}
       isLoading={isLoading}
       notesActions={NOTES_CARD_ACTIONS}
