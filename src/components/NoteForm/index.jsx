@@ -4,6 +4,7 @@ import { NoteFormPresentation } from './Presentation';
 import { useAddNewNoteMutation } from '../../app/services/api';
 import { NOTES_FORM_ACTIONS } from '../NotesActions/NotesActionsConstants';
 import { fetchIMGUrl } from '../../utils/fetchImageUrl';
+import { useNavigate } from 'react-router-dom';
 
 export const NoteForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +18,8 @@ export const NoteForm = () => {
   const [isLabelsVisible, setIsLabelsVisible] = useState(false);
 
   const [addNewNote] = useAddNewNoteMutation();
+
+  const navigate = useNavigate();
 
   const noteFormModalButtonRef = useRef(null);
   const noteFormTitleRef = useRef(null);
@@ -75,6 +78,7 @@ export const NoteForm = () => {
           setImgUrl(null);
           imageFileDataRef.current = null;
           setIsModalOpen(false);
+          navigate('/notes');
         }
         setBgColor('#fff');
         setHoverBackgroundColor('#e0e0e0');

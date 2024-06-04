@@ -20,11 +20,12 @@ export const NotesCard = ({ note, notesActions }) => {
       }
 
       case 'archive': {
+        const isNoteArchive = note.states.isArchived ? false : true;
         await updateNote({
           noteId: note._id,
           body: {
             states: {
-              isArchived: true,
+              isArchived: isNoteArchive,
             },
           },
         }).unwrap();
