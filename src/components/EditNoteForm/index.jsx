@@ -3,7 +3,6 @@ import { EditNoteFormPresentation } from './Presentation';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   useDeleteNoteMutation,
-  useGetLabelsQuery,
   useGetNoteQuery,
   useUpdateNoteMutation,
 } from '../../app/services/api';
@@ -31,8 +30,6 @@ export const EditNoteForm = () => {
 
   const dispatch = useDispatch();
 
-  //const [imgUrl, setImgUrl] = useState(null);
-  const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
   const [noteLabels, setNoteLabels] = useState([]);
   const [isLabelsVisible, setIsLabelsVisible] = useState(false);
 
@@ -55,7 +52,6 @@ export const EditNoteForm = () => {
       setNoteLabels(data.note?.labels);
       if (data.note?.imageUrl) {
         dispatch(handleImage({ imageUrl: data.note?.imageUrl }));
-        //setImgUrl(data.note?.imageUrl);
         imageFileDataRef.current = data.note?.imageUrl;
       }
       isNoteArchived.current = data.note.states.isArchived;
@@ -157,19 +153,6 @@ export const EditNoteForm = () => {
 
     e.target.value = null;
   };
-
-  // const handleMouseEnter = () => {
-  //   setIsImgDeleteBtnVisible(true);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   setIsImgDeleteBtnVisible(false);
-  // };
-
-  // const imageDeleteHandler = () => {
-  //   setImgUrl(null);
-  //   imageFileDataRef.current = null;
-  // };
 
   const handleLabel = (label, labelCheckboxRef) => {
     const labelId = label._id;
