@@ -177,31 +177,9 @@ export const NoteForm = () => {
     imageFileDataRef.current = null;
   };
 
-  const handleLabel = (label, labelCheckboxRef) => {
-    const labelId = label._id;
-
-    labelCheckboxRef.current.checked = !labelCheckboxRef.current.checked;
-    const isLabelAlreadyAdded = labelsToAdd.find(
-      (label) => label._id === labelId,
-    );
-
-    if (isLabelAlreadyAdded) {
-      const newLabelsToAdd = labelsToAdd.filter(
-        (label) => label._id !== labelId,
-      );
-      dispatch(handleLabelsForAddition({ labels: newLabelsToAdd }));
-    } else {
-      dispatch(handleLabelsForAddition({ labels: [...labelsToAdd, label] }));
-    }
-  };
-
   const handleRemoveLabel = (labelId) => {
     const newLabelsToAdd = labelsToAdd.filter((label) => label._id !== labelId);
     dispatch(handleLabelsForAddition({ labels: newLabelsToAdd }));
-    dispatch(handleActiveActionModal({ activeActionModal: null }));
-  };
-
-  const closeLabels = () => {
     dispatch(handleActiveActionModal({ activeActionModal: null }));
   };
 
@@ -235,10 +213,8 @@ export const NoteForm = () => {
       handleMouseEnter={handleMouseEnter}
       handleMouseLeave={handleMouseLeave}
       imageDeleteHandler={imageDeleteHandler}
-      handleLabel={handleLabel}
       labelsToAdd={labelsToAdd}
       handleRemoveLabel={handleRemoveLabel}
-      closeLabels={closeLabels}
       activeActionModal={activeActionModal}
     />
   );

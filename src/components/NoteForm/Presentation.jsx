@@ -23,10 +23,8 @@ export const NoteFormPresentation = ({
   handleMouseEnter,
   handleMouseLeave,
   imageDeleteHandler,
-  handleLabel,
   labelsToAdd,
   handleRemoveLabel,
-  closeLabels,
   activeActionModal,
 }) => {
   useEffect(() => {
@@ -113,13 +111,7 @@ export const NoteFormPresentation = ({
             })}
           </ul>
         )}
-        {activeActionModal === 'labels' && (
-          <Labels
-            handleLabel={handleLabel}
-            labelsToAdd={labelsToAdd}
-            closeLabels={closeLabels}
-          />
-        )}
+        {activeActionModal === 'labels' && <Labels />}
         <div className="w-full flex justify-between items-center px-3 pb-3">
           <NotesActions
             notesActions={notesActions}
