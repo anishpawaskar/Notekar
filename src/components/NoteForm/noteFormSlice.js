@@ -29,8 +29,11 @@ const noteFormSlice = createSlice({
     handleDescriptionChange2: (state, { payload }) => {
       state.formData.description = payload.description;
     },
+    handleColor: (state, { payload: { bgColor, hoverBackgroundColor } }) => {
+      state.formData.bgColor = bgColor;
+      state.formData.hoverBackgroundColor = hoverBackgroundColor;
+    },
     handleActiveActionModal: (state, { payload: { activeActionModal } }) => {
-      console.log('payload', activeActionModal);
       state.activeActionModal = activeActionModal;
     },
   },
@@ -41,5 +44,6 @@ export const {
   showModalOnInput,
   handleDescriptionChange2,
   handleActiveActionModal,
+  handleColor,
 } = noteFormSlice.actions;
 export default noteFormSlice.reducer;
