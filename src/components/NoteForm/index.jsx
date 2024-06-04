@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { NoteFormModalButton } from './ModalButton';
 import { NoteFormPresentation } from './Presentation';
 import { useAddNewNoteMutation } from '../../app/services/api';
@@ -12,21 +12,12 @@ import {
   handleImage,
   handleImageBtnVisibility,
   handleLabelsForAddition,
+  handleSaveNote,
   showModal,
   showModalOnInput,
 } from './noteFormSlice';
 
 export const NoteForm = () => {
-  //const [isModalOpen, setIsModalOpen] = useState(false);
-  //const [description, setDescription] = useState('');
-  //const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
-  //const [bgColor, setBgColor] = useState('#fff');
-  //const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
-  // const [imgUrl, setImgUrl] = useState(null);
-  //const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
-  //const [labelsToAdd, setLabelsToAdd] = useState([]);
-  //const [isLabelsVisible, setIsLabelsVisible] = useState(false);
-
   const {
     isModalOpen,
     formData: {
@@ -53,20 +44,16 @@ export const NoteForm = () => {
   let isNoteSaved = false;
 
   const openModal = () => {
-    //setIsModalOpen(true);
     dispatch(showModal());
   };
 
   const openModalOnInput = (e) => {
     if (e.target.value !== '') {
       dispatch(showModalOnInput({ description: e.target.value }));
-      //setIsModalOpen(true);
-      //setDescription(e.target.value);
     }
   };
 
   const handleDescriptionChange = (e) => {
-    //setDescription(e.target.value);
     dispatch(handleDescriptionChange2({ description: e.target.value }));
   };
 
@@ -94,25 +81,12 @@ export const NoteForm = () => {
             labels,
           }).unwrap();
           noteFormTitleRef.current.value = '';
-          //setDescription('');
           noteFormDescriptionRef.current.value = '';
-          //setBgColor('#fff');
-          //setHoverBackgroundColor('#e0e0e0');
-          //setIsColorPaletteVisible(false);
-          //setIsLabelsVisible(false);
-          //setLabelsToAdd([]);
-          //setImgUrl(null);
           imageFileDataRef.current = null;
-          //setIsModalOpen(false);
+          dispatch(handleSaveNote());
         }
-        //setBgColor('#fff');
-        //setHoverBackgroundColor('#e0e0e0');
-        //setImgUrl(null);
+        dispatch(handleSaveNote());
         imageFileDataRef.current = null;
-        //setLabelsToAdd([]);
-        //setIsModalOpen(false);
-        //setIsColorPaletteVisible(false);
-        //setIsLabelsVisible(false);
       }
     } catch (err) {
       console.error(err);
@@ -148,7 +122,6 @@ export const NoteForm = () => {
                   : 'colorPalette',
           }),
         );
-        //setIsColorPaletteVisible((prevState) => !prevState);
         break;
       }
 
@@ -163,7 +136,6 @@ export const NoteForm = () => {
                   : 'labels',
           }),
         );
-        //setIsLabelsVisible(true);
         break;
       }
     }
@@ -171,15 +143,12 @@ export const NoteForm = () => {
 
   const closeColorPalette = () => {
     dispatch(handleActiveActionModal({ activeActionModal: null }));
-    //setIsColorPaletteVisible(false);
   };
 
   const colorHandler = (color, hoverBgColor) => {
     dispatch(
       handleColor({ bgColor: color, hoverBackgroundColor: hoverBgColor }),
     );
-    //setBgColor(color);
-    //setHoverBackgroundColor(hoverBgColor);
   };
 
   const imageHandler = (e) => {
@@ -197,17 +166,14 @@ export const NoteForm = () => {
 
   const handleMouseEnter = () => {
     dispatch(handleImageBtnVisibility({ isImgDeleteBtnVisible: true }));
-    //setIsImgDeleteBtnVisible(true);
   };
 
   const handleMouseLeave = () => {
     dispatch(handleImageBtnVisibility({ isImgDeleteBtnVisible: false }));
-    //setIsImgDeleteBtnVisible(false);
   };
 
   const imageDeleteHandler = () => {
     dispatch(handleImage({ imageFile: null }));
-    //setImgUrl(null);
     imageFileDataRef.current = null;
   };
 
@@ -224,10 +190,8 @@ export const NoteForm = () => {
         (label) => label._id !== labelId,
       );
       dispatch(handleLabelsForAddition({ labels: newLabelsToAdd }));
-      //setLabelsToAdd(newLabelsToAdd);
     } else {
       dispatch(handleLabelsForAddition({ labels: [...labelsToAdd, label] }));
-      //setLabelsToAdd([...labelsToAdd, label]);
     }
   };
 
@@ -235,12 +199,10 @@ export const NoteForm = () => {
     const newLabelsToAdd = labelsToAdd.filter((label) => label._id !== labelId);
     setLabelsToAdd(newLabelsToAdd);
     dispatch(handleActiveActionModal({ activeActionModal: null }));
-    //setIsLabelsVisible(false);
   };
 
   const closeLabels = () => {
     dispatch(handleActiveActionModal({ activeActionModal: null }));
-    //setIsLabelsVisible(false);
   };
 
   if (!isModalOpen) {
@@ -263,7 +225,6 @@ export const NoteForm = () => {
       handleKeyDown={handleKeyDown}
       notesActions={NOTES_FORM_ACTIONS}
       handleActions={handleActions}
-      //isColorPaletteVisible={isColorPaletteVisible}
       closeColorPalette={closeColorPalette}
       bgColor={bgColor}
       hoverBackgroundColor={hoverBackgroundColor}
@@ -277,7 +238,6 @@ export const NoteForm = () => {
       handleLabel={handleLabel}
       labelsToAdd={labelsToAdd}
       handleRemoveLabel={handleRemoveLabel}
-      //isLabelsVisible={isLabelsVisible}
       closeLabels={closeLabels}
       activeActionModal={activeActionModal}
     />

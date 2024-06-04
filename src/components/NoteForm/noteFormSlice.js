@@ -48,6 +48,12 @@ const noteFormSlice = createSlice({
     handleActiveActionModal: (state, { payload: { activeActionModal } }) => {
       state.activeActionModal = activeActionModal;
     },
+    handleSaveNote: (state) => {
+      state.isModalOpen = false;
+      state.formData = initialState.formData;
+      state.isImgDeleteBtnVisible = false;
+      state.activeActionModal = null;
+    },
   },
 });
 
@@ -60,5 +66,6 @@ export const {
   handleImage,
   handleImageBtnVisibility,
   handleLabelsForAddition,
+  handleSaveNote,
 } = noteFormSlice.actions;
 export default noteFormSlice.reducer;
