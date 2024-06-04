@@ -9,6 +9,7 @@ import {
   handleActiveActionModal,
   handleColor,
   handleDescriptionChange2,
+  handleImage,
   showModal,
   showModalOnInput,
 } from './noteFormSlice';
@@ -19,14 +20,14 @@ export const NoteForm = () => {
   //const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
   //const [bgColor, setBgColor] = useState('#fff');
   //const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
-  const [imgUrl, setImgUrl] = useState(null);
+  // const [imgUrl, setImgUrl] = useState(null);
   const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
   const [labelsToAdd, setLabelsToAdd] = useState([]);
   //const [isLabelsVisible, setIsLabelsVisible] = useState(false);
 
   const {
     isModalOpen,
-    formData: { description, bgColor, hoverBackgroundColor },
+    formData: { description, bgColor, hoverBackgroundColor, imgUrl },
     activeActionModal,
   } = useSelector((state) => state.noteForm);
 
@@ -91,13 +92,13 @@ export const NoteForm = () => {
           //setIsColorPaletteVisible(false);
           //setIsLabelsVisible(false);
           setLabelsToAdd([]);
-          setImgUrl(null);
+          //setImgUrl(null);
           imageFileDataRef.current = null;
           //setIsModalOpen(false);
         }
         //setBgColor('#fff');
         //setHoverBackgroundColor('#e0e0e0');
-        setImgUrl(null);
+        //setImgUrl(null);
         imageFileDataRef.current = null;
         setLabelsToAdd([]);
         //setIsModalOpen(false);
@@ -118,6 +119,8 @@ export const NoteForm = () => {
   const handleActions = async (e, action) => {
     switch (action) {
       case 'archive': {
+        const title = noteFormTitleRef.current.value;
+
         if (title || description) {
           isNoteArchived.current = true;
           await saveNote();
@@ -179,7 +182,7 @@ export const NoteForm = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setImgUrl(reader.result);
+      dispatch(handleImage({ imageFile: reader.result }));
     };
 
     e.target.value = null;
@@ -194,7 +197,8 @@ export const NoteForm = () => {
   };
 
   const imageDeleteHandler = () => {
-    setImgUrl(null);
+    dispatch(handleImage({ imageFile: null }));
+    //setImgUrl(null);
     imageFileDataRef.current = null;
   };
 

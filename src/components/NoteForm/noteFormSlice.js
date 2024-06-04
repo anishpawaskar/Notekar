@@ -33,6 +33,9 @@ const noteFormSlice = createSlice({
       state.formData.bgColor = bgColor;
       state.formData.hoverBackgroundColor = hoverBackgroundColor;
     },
+    handleImage: (state, { payload: { imageFile } }) => {
+      state.formData.imgUrl = imageFile;
+    },
     handleActiveActionModal: (state, { payload: { activeActionModal } }) => {
       state.activeActionModal = activeActionModal;
     },
@@ -45,5 +48,6 @@ export const {
   handleDescriptionChange2,
   handleActiveActionModal,
   handleColor,
+  handleImage,
 } = noteFormSlice.actions;
 export default noteFormSlice.reducer;
