@@ -13,7 +13,6 @@ export const NoteFormPresentation = ({
   handleKeyDown,
   notesActions,
   handleActions,
-  //isColorPaletteVisible,
   closeColorPalette,
   bgColor,
   hoverBackgroundColor,
@@ -27,7 +26,6 @@ export const NoteFormPresentation = ({
   handleLabel,
   labelsToAdd,
   handleRemoveLabel,
-  //isLabelsVisible,
   closeLabels,
   activeActionModal,
 }) => {
