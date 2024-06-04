@@ -16,6 +16,7 @@ import {
   showModal,
   showModalOnInput,
 } from './noteFormSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const NoteForm = () => {
   const {
@@ -34,6 +35,7 @@ export const NoteForm = () => {
   const [addNewNote] = useAddNewNoteMutation();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const noteFormModalButtonRef = useRef(null);
   const noteFormTitleRef = useRef(null);
@@ -84,6 +86,7 @@ export const NoteForm = () => {
           noteFormDescriptionRef.current.value = '';
           imageFileDataRef.current = null;
           dispatch(handleSaveNote());
+          navigate('/notes');
         }
         dispatch(handleSaveNote());
         imageFileDataRef.current = null;
