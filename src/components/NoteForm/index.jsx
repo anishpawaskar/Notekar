@@ -10,6 +10,7 @@ import {
   handleColor,
   handleDescriptionChange2,
   handleImage,
+  handleImageBtnVisibility,
   showModal,
   showModalOnInput,
 } from './noteFormSlice';
@@ -21,7 +22,7 @@ export const NoteForm = () => {
   //const [bgColor, setBgColor] = useState('#fff');
   //const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
   // const [imgUrl, setImgUrl] = useState(null);
-  const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
+  //const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
   const [labelsToAdd, setLabelsToAdd] = useState([]);
   //const [isLabelsVisible, setIsLabelsVisible] = useState(false);
 
@@ -29,6 +30,7 @@ export const NoteForm = () => {
     isModalOpen,
     formData: { description, bgColor, hoverBackgroundColor, imgUrl },
     activeActionModal,
+    isImgDeleteBtnVisible,
   } = useSelector((state) => state.noteForm);
 
   const [addNewNote] = useAddNewNoteMutation();
@@ -189,11 +191,13 @@ export const NoteForm = () => {
   };
 
   const handleMouseEnter = () => {
-    setIsImgDeleteBtnVisible(true);
+    dispatch(handleImageBtnVisibility({ isImgDeleteBtnVisible: true }));
+    //setIsImgDeleteBtnVisible(true);
   };
 
   const handleMouseLeave = () => {
-    setIsImgDeleteBtnVisible(false);
+    dispatch(handleImageBtnVisibility({ isImgDeleteBtnVisible: false }));
+    //setIsImgDeleteBtnVisible(false);
   };
 
   const imageDeleteHandler = () => {
