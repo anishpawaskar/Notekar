@@ -14,9 +14,7 @@ export const EditNoteFormPresentation = ({
   notesActions,
   bgColor,
   hoverBackgroundColor,
-  isColorPaletteVisible,
-  closeColorPalette,
-  colorHandler,
+  activeActionModal,
   imgUrl,
   isImgDeleteBtnVisible,
   imageHandler,
@@ -116,12 +114,7 @@ export const EditNoteFormPresentation = ({
             Close
           </button>
         </div>
-        {isColorPaletteVisible && (
-          <ColorPalette
-            closeColorPalette={closeColorPalette}
-            colorHandler={colorHandler}
-          />
-        )}
+        {activeActionModal === 'colorPalette' && <ColorPalette />}
         {isLabelsVisible && (
           <Labels
             handleLabel={handleLabel}

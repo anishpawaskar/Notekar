@@ -141,16 +141,6 @@ export const NoteForm = () => {
     }
   };
 
-  const closeColorPalette = () => {
-    dispatch(handleActiveActionModal({ activeActionModal: null }));
-  };
-
-  const colorHandler = (color, hoverBgColor) => {
-    dispatch(
-      handleColor({ bgColor: color, hoverBackgroundColor: hoverBgColor }),
-    );
-  };
-
   const imageHandler = (e) => {
     const file = e.target.files[0];
     imageFileDataRef.current = file;
@@ -203,10 +193,8 @@ export const NoteForm = () => {
       handleKeyDown={handleKeyDown}
       notesActions={NOTES_FORM_ACTIONS}
       handleActions={handleActions}
-      closeColorPalette={closeColorPalette}
       bgColor={bgColor}
       hoverBackgroundColor={hoverBackgroundColor}
-      colorHandler={colorHandler}
       imageHandler={imageHandler}
       imgUrl={imgUrl}
       isImgDeleteBtnVisible={isImgDeleteBtnVisible}

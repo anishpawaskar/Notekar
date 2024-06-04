@@ -13,10 +13,8 @@ export const NoteFormPresentation = ({
   handleKeyDown,
   notesActions,
   handleActions,
-  closeColorPalette,
   bgColor,
   hoverBackgroundColor,
-  colorHandler,
   imageHandler,
   imgUrl,
   isImgDeleteBtnVisible,
@@ -85,12 +83,7 @@ export const NoteFormPresentation = ({
             placeholder="Take a note..."
           />
         </div>
-        {activeActionModal === 'colorPalette' && (
-          <ColorPalette
-            closeColorPalette={closeColorPalette}
-            colorHandler={colorHandler}
-          />
-        )}
+        {activeActionModal === 'colorPalette' && <ColorPalette />}
         {labelsToAdd.length > 0 && (
           <ul className="px-3 flex gap-2 relative z-50">
             {labelsToAdd.map((label) => {

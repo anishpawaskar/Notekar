@@ -11,6 +11,7 @@ const initialState = {
   },
   isImgDeleteBtnVisible: false,
   activeActionModal: null,
+  noteId: null,
 };
 
 const noteFormSlice = createSlice({
@@ -54,6 +55,9 @@ const noteFormSlice = createSlice({
       state.isImgDeleteBtnVisible = false;
       state.activeActionModal = null;
     },
+    setNoteId: (state, { payload: { noteId } }) => {
+      state.noteId = noteId;
+    },
   },
 });
 
@@ -67,5 +71,6 @@ export const {
   handleImageBtnVisibility,
   handleLabelsForAddition,
   handleSaveNote,
+  setNoteId,
 } = noteFormSlice.actions;
 export default noteFormSlice.reducer;
