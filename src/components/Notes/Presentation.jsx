@@ -20,12 +20,6 @@ export const NotesPresentation = ({
     });
   }
 
-  console.log(
-    location.search === '?archive=true' &&
-      data.notes.length === 0 &&
-      'Arhice note distil',
-  );
-
   return (
     <div className="mt-12">
       {location.search !== '?archive=true' && data?.notes.length === 0 && (
