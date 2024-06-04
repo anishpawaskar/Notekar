@@ -197,7 +197,7 @@ export const NoteForm = () => {
 
   const handleRemoveLabel = (labelId) => {
     const newLabelsToAdd = labelsToAdd.filter((label) => label._id !== labelId);
-    setLabelsToAdd(newLabelsToAdd);
+    dispatch(handleLabelsForAddition({ labels: newLabelsToAdd }));
     dispatch(handleActiveActionModal({ activeActionModal: null }));
   };
 
