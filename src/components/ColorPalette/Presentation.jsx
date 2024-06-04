@@ -4,11 +4,7 @@ export const ColorPalettePresentation = ({
   colors,
   closeColorPalette,
   colorHandler,
-  usingIn,
 }) => {
-  const bottomStyleClassName =
-    usingIn === 'NotesCard' ? 'sm:bottom-[-75px]' : 'sm:bottom-[-35px]';
-
   const colorList = colors.map((color, idx) => {
     const liClassName =
       color.name === 'Default'
@@ -44,7 +40,7 @@ export const ColorPalettePresentation = ({
         className="w-full h-full absolute top-0 left-0 z-10"
       />
       <ul
-        className={`flex items-center gap-1 flex-wrap bg-white shadow-xl p-2 rounded-lg border absolute bottom-[-75px] left-[-20px] ${bottomStyleClassName} sm:left-[-35px] z-20`}
+        className={`flex items-center gap-1 flex-wrap bg-white shadow-xl p-2 rounded-lg border absolute bottom-[-75px] left-[-20px] sm:left-[-35px] sm:bottom-[-36px] z-20`}
       >
         {colorList}
       </ul>

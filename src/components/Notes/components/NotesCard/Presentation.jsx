@@ -4,17 +4,17 @@ import { ColorPalette } from '../../../ColorPalette';
 
 export const NotesCardPresentation = ({
   note,
+  noteId,
   notesActions,
   handleActions,
   bgColor,
-  isColorPaletteVisible,
+  activeActionModal,
   closeColorPalette,
-  colorHandler,
   handleRemoveLabel,
 }) => {
   return (
     <>
-      {isColorPaletteVisible && (
+      {activeActionModal === 'colorPalette' && note._id === noteId && (
         <div
           onClick={(e) => closeColorPalette(e)}
           className="w-full h-full absolute top-0 left-0 z-10"
@@ -40,7 +40,7 @@ export const NotesCardPresentation = ({
             </div>
           )}
           {!note.title && !note.description && !note.imageUrl && (
-            <p className="m-0 text-xl">Empty note</p>
+            <p className="m-0 text-xl p-4">Empty note</p>
           )}
           {note.title && (
             <p
@@ -82,16 +82,12 @@ export const NotesCardPresentation = ({
               )}
             </ul>
           )}
-          {isColorPaletteVisible && (
+          {activeActionModal === 'colorPalette' && note._id === noteId && (
             <div
               onClick={(e) => closeColorPalette(e)}
               className="w-full h-full absolute top-0 left-0 z-10"
             >
-              <ColorPalette
-                closeColorPalette={closeColorPalette}
-                colorHandler={colorHandler}
-                usingIn="NotesCard"
-              />
+              <ColorPalette usingIn="NotesCard" />
             </div>
           )}
           <div className="px-4 pb-4">

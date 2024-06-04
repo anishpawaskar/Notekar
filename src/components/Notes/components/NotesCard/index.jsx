@@ -3,10 +3,15 @@ import {
   useDeleteNoteMutation,
   useUpdateNoteMutation,
 } from '../../../../app/services/api';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  handleActiveActionModal,
+  setNoteId,
+} from '../../../NoteForm/noteFormSlice';
 
 export const NotesCard = ({ note, notesActions }) => {
-  const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
+  const { activeActionModal, noteId } = useSelector((state) => state.noteForm);
+  const dispatch = useDispatch();
 
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
@@ -15,7 +20,12 @@ export const NotesCard = ({ note, notesActions }) => {
     e.preventDefault();
     switch (action) {
       case 'changeBackground': {
-        setIsColorPaletteVisible(true);
+        dispatch(setNoteId({ noteId: note._id }));
+        dispatch(
+          handleActiveActionModal({
+            activeActionModal: activeActionModal ? null : 'colorPalette',
+          }),
+        );
         break;
       }
 
@@ -41,20 +51,8 @@ export const NotesCard = ({ note, notesActions }) => {
 
   const closeColorPalette = (e) => {
     e.preventDefault();
-    setIsColorPaletteVisible(false);
-  };
-
-  const colorHandler = async (color, hoverBgColor, e) => {
-    e.preventDefault();
-    await updateNote({
-      noteId: note._id,
-      body: {
-        theme: {
-          backgroundColor: color,
-          hoverBackgroundColor: hoverBgColor,
-        },
-      },
-    }).unwrap();
+    dispatch(handleActiveActionModal({ activeActionModal: null }));
+    dispatch(setNoteId({ noteId: null }));
   };
 
   const handleRemoveLabel = async (e, noteId, labelId) => {
@@ -70,12 +68,12 @@ export const NotesCard = ({ note, notesActions }) => {
   return (
     <NotesCardPresentation
       note={note}
+      noteId={noteId}
       notesActions={notesActions}
       handleActions={handleActions}
       bgColor={note?.theme?.backgroundColor}
-      isColorPaletteVisible={isColorPaletteVisible}
+      activeActionModal={activeActionModal}
       closeColorPalette={closeColorPalette}
-      colorHandler={colorHandler}
       handleRemoveLabel={handleRemoveLabel}
     />
   );

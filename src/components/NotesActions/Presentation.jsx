@@ -28,7 +28,7 @@ export const NotesActionsPresentation = ({
 
     return (
       <div
-        className={action.type === 'input' ? 'self-baseline' : 'self-auto'}
+        className={`relative z-30 ${action.type === 'input' ? 'self-baseline' : 'self-auto'}`}
         key={action.id}
       >
         {action.type === 'input' ? (

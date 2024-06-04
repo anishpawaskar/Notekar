@@ -9,6 +9,12 @@ import {
 } from '../../app/services/api';
 import { NOTES_EDIT_FORM_ACTIONS } from '../NotesActions/NotesActionsConstants';
 import { fetchIMGUrl } from '../../utils/fetchImageUrl';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  handleActiveActionModal,
+  handleColor,
+  handleSaveNote,
+} from '../NoteForm/noteFormSlice';
 
 export const EditNoteForm = () => {
   const { noteId } = useParams();
@@ -17,9 +23,13 @@ export const EditNoteForm = () => {
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
 
-  const [bgColor, setBgColor] = useState('');
-  const [hoverBackgroundColor, setHoverBackgroundColor] = useState('');
-  const [isColorPaletteVisible, setIsColorPaletteVisible] = useState(false);
+  const {
+    formData: { bgColor, hoverBackgroundColor },
+    activeActionModal,
+  } = useSelector((state) => state.noteForm);
+
+  const dispatch = useDispatch();
+
   const [imgUrl, setImgUrl] = useState(null);
   const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
   const [noteLabels, setNoteLabels] = useState([]);
@@ -35,8 +45,12 @@ export const EditNoteForm = () => {
 
   useEffect(() => {
     if (!isLoading && data?.note) {
-      setBgColor(data.note?.theme?.backgroundColor);
-      setHoverBackgroundColor(data.note?.theme?.hoverBackgroundColor);
+      dispatch(
+        handleColor({
+          bgColor: data.note?.theme?.backgroundColor,
+          hoverBackgroundColor: data.note?.theme?.hoverBackgroundColor,
+        }),
+      );
       setNoteLabels(data.note?.labels);
       if (data.note?.imageUrl) {
         setImgUrl(data.note?.imageUrl);
@@ -84,6 +98,7 @@ export const EditNoteForm = () => {
             labelsToDelete: labelsToDeleteRef.current,
           },
         }).unwrap();
+        dispatch(handleSaveNote());
         navigate(-1);
       }
     } catch (err) {
@@ -95,7 +110,16 @@ export const EditNoteForm = () => {
     switch (action) {
       case 'changeBackground': {
         e.preventDefault();
-        setIsColorPaletteVisible(true);
+        dispatch(
+          handleActiveActionModal({
+            activeActionModal:
+              activeActionModal === 'labels'
+                ? 'colorPalette'
+                : activeActionModal
+                  ? null
+                  : 'colorPalette',
+          }),
+        );
         break;
       }
 
@@ -117,15 +141,6 @@ export const EditNoteForm = () => {
         break;
       }
     }
-  };
-
-  const closeColorPalette = () => {
-    setIsColorPaletteVisible(false);
-  };
-
-  const colorHandler = (color, hoverBgColor) => {
-    setBgColor(color);
-    setHoverBackgroundColor(hoverBgColor);
   };
 
   const imageHandler = (e) => {
@@ -211,9 +226,7 @@ export const EditNoteForm = () => {
       notesActions={NOTES_EDIT_FORM_ACTIONS}
       bgColor={bgColor}
       hoverBackgroundColor={hoverBackgroundColor}
-      isColorPaletteVisible={isColorPaletteVisible}
-      closeColorPalette={closeColorPalette}
-      colorHandler={colorHandler}
+      activeActionModal={activeActionModal}
       imgUrl={imgUrl}
       isImgDeleteBtnVisible={isImgDeleteBtnVisible}
       imageHandler={imageHandler}

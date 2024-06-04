@@ -13,22 +13,17 @@ export const NoteFormPresentation = ({
   handleKeyDown,
   notesActions,
   handleActions,
-  isColorPaletteVisible,
-  closeColorPalette,
   bgColor,
   hoverBackgroundColor,
-  colorHandler,
   imageHandler,
   imgUrl,
   isImgDeleteBtnVisible,
   handleMouseEnter,
   handleMouseLeave,
   imageDeleteHandler,
-  handleLabel,
   labelsToAdd,
   handleRemoveLabel,
-  isLabelsVisible,
-  closeLabels,
+  activeActionModal,
 }) => {
   useEffect(() => {
     noteFormDescriptionRef.current.focus();
@@ -88,12 +83,7 @@ export const NoteFormPresentation = ({
             placeholder="Take a note..."
           />
         </div>
-        {isColorPaletteVisible && (
-          <ColorPalette
-            closeColorPalette={closeColorPalette}
-            colorHandler={colorHandler}
-          />
-        )}
+        {activeActionModal === 'colorPalette' && <ColorPalette />}
         {labelsToAdd.length > 0 && (
           <ul className="px-3 flex gap-2 relative z-50">
             {labelsToAdd.map((label) => {
@@ -114,13 +104,7 @@ export const NoteFormPresentation = ({
             })}
           </ul>
         )}
-        {isLabelsVisible && (
-          <Labels
-            handleLabel={handleLabel}
-            labelsToAdd={labelsToAdd}
-            closeLabels={closeLabels}
-          />
-        )}
+        {activeActionModal === 'labels' && <Labels />}
         <div className="w-full flex justify-between items-center px-3 pb-3">
           <NotesActions
             notesActions={notesActions}
