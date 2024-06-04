@@ -40,7 +40,7 @@ export const NotesCardPresentation = ({
             </div>
           )}
           {!note.title && !note.description && !note.imageUrl && (
-            <p className="m-0 text-xl">Empty note</p>
+            <p className="m-0 text-xl p-4">Empty note</p>
           )}
           {note.title && (
             <p
