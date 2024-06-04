@@ -7,10 +7,8 @@ import { fetchIMGUrl } from '../../utils/fetchImageUrl';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   handleActiveActionModal,
-  handleColor,
   handleDescriptionChange2,
   handleImage,
-  handleImageBtnVisibility,
   handleLabelsForAddition,
   handleSaveNote,
   showModal,
@@ -29,7 +27,6 @@ export const NoteForm = () => {
       labelsToAdd,
     },
     activeActionModal,
-    isImgDeleteBtnVisible,
   } = useSelector((state) => state.noteForm);
 
   const [addNewNote] = useAddNewNoteMutation();
@@ -151,23 +148,10 @@ export const NoteForm = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      dispatch(handleImage({ imageFile: reader.result }));
+      dispatch(handleImage({ imageUrl: reader.result }));
     };
 
     e.target.value = null;
-  };
-
-  const handleMouseEnter = () => {
-    dispatch(handleImageBtnVisibility({ isImgDeleteBtnVisible: true }));
-  };
-
-  const handleMouseLeave = () => {
-    dispatch(handleImageBtnVisibility({ isImgDeleteBtnVisible: false }));
-  };
-
-  const imageDeleteHandler = () => {
-    dispatch(handleImage({ imageFile: null }));
-    imageFileDataRef.current = null;
   };
 
   const handleRemoveLabel = (labelId) => {
@@ -200,10 +184,7 @@ export const NoteForm = () => {
       hoverBackgroundColor={hoverBackgroundColor}
       imageHandler={imageHandler}
       imgUrl={imgUrl}
-      isImgDeleteBtnVisible={isImgDeleteBtnVisible}
-      handleMouseEnter={handleMouseEnter}
-      handleMouseLeave={handleMouseLeave}
-      imageDeleteHandler={imageDeleteHandler}
+      imageFileDataRef={imageFileDataRef}
       labelsToAdd={labelsToAdd}
       handleRemoveLabel={handleRemoveLabel}
       activeActionModal={activeActionModal}
