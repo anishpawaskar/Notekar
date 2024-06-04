@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   handleActiveActionModal,
   handleColor,
+  handleImage,
   handleSaveNote,
 } from '../NoteForm/noteFormSlice';
 
@@ -24,13 +25,13 @@ export const EditNoteForm = () => {
   const [deleteNote] = useDeleteNoteMutation();
 
   const {
-    formData: { bgColor, hoverBackgroundColor },
+    formData: { bgColor, hoverBackgroundColor, imgUrl },
     activeActionModal,
   } = useSelector((state) => state.noteForm);
 
   const dispatch = useDispatch();
 
-  const [imgUrl, setImgUrl] = useState(null);
+  //const [imgUrl, setImgUrl] = useState(null);
   const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
   const [noteLabels, setNoteLabels] = useState([]);
   const [isLabelsVisible, setIsLabelsVisible] = useState(false);
@@ -53,7 +54,8 @@ export const EditNoteForm = () => {
       );
       setNoteLabels(data.note?.labels);
       if (data.note?.imageUrl) {
-        setImgUrl(data.note?.imageUrl);
+        dispatch(handleImage({ imageUrl: data.note?.imageUrl }));
+        //setImgUrl(data.note?.imageUrl);
         imageFileDataRef.current = data.note?.imageUrl;
       }
       isNoteArchived.current = data.note.states.isArchived;
@@ -150,24 +152,24 @@ export const EditNoteForm = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setImgUrl(reader.result);
+      dispatch(handleImage({ imageUrl: reader.result }));
     };
 
     e.target.value = null;
   };
 
-  const handleMouseEnter = () => {
-    setIsImgDeleteBtnVisible(true);
-  };
+  // const handleMouseEnter = () => {
+  //   setIsImgDeleteBtnVisible(true);
+  // };
 
-  const handleMouseLeave = () => {
-    setIsImgDeleteBtnVisible(false);
-  };
+  // const handleMouseLeave = () => {
+  //   setIsImgDeleteBtnVisible(false);
+  // };
 
-  const imageDeleteHandler = () => {
-    setImgUrl(null);
-    imageFileDataRef.current = null;
-  };
+  // const imageDeleteHandler = () => {
+  //   setImgUrl(null);
+  //   imageFileDataRef.current = null;
+  // };
 
   const handleLabel = (label, labelCheckboxRef) => {
     const labelId = label._id;
@@ -228,11 +230,8 @@ export const EditNoteForm = () => {
       hoverBackgroundColor={hoverBackgroundColor}
       activeActionModal={activeActionModal}
       imgUrl={imgUrl}
-      isImgDeleteBtnVisible={isImgDeleteBtnVisible}
+      imageFileDataRef={imageFileDataRef}
       imageHandler={imageHandler}
-      handleMouseEnter={handleMouseEnter}
-      handleMouseLeave={handleMouseLeave}
-      imageDeleteHandler={imageDeleteHandler}
       noteLabels={noteLabels}
       handleLabel={handleLabel}
       closeLabels={closeLabels}

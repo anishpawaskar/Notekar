@@ -34,8 +34,8 @@ const noteFormSlice = createSlice({
       state.formData.bgColor = bgColor;
       state.formData.hoverBackgroundColor = hoverBackgroundColor;
     },
-    handleImage: (state, { payload: { imageFile } }) => {
-      state.formData.imgUrl = imageFile;
+    handleImage: (state, { payload: { imageUrl } }) => {
+      state.formData.imgUrl = imageUrl;
     },
     handleImageBtnVisibility: (
       state,
