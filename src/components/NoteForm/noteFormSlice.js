@@ -42,6 +42,9 @@ const noteFormSlice = createSlice({
     ) => {
       state.isImgDeleteBtnVisible = isImgDeleteBtnVisible;
     },
+    handleLabelsForAddition: (state, { payload: { labels } }) => {
+      state.formData.labelsToAdd = labels;
+    },
     handleActiveActionModal: (state, { payload: { activeActionModal } }) => {
       state.activeActionModal = activeActionModal;
     },
@@ -56,5 +59,6 @@ export const {
   handleColor,
   handleImage,
   handleImageBtnVisibility,
+  handleLabelsForAddition,
 } = noteFormSlice.actions;
 export default noteFormSlice.reducer;

@@ -11,6 +11,7 @@ import {
   handleDescriptionChange2,
   handleImage,
   handleImageBtnVisibility,
+  handleLabelsForAddition,
   showModal,
   showModalOnInput,
 } from './noteFormSlice';
@@ -23,12 +24,18 @@ export const NoteForm = () => {
   //const [hoverBackgroundColor, setHoverBackgroundColor] = useState('#e0e0e0');
   // const [imgUrl, setImgUrl] = useState(null);
   //const [isImgDeleteBtnVisible, setIsImgDeleteBtnVisible] = useState(false);
-  const [labelsToAdd, setLabelsToAdd] = useState([]);
+  //const [labelsToAdd, setLabelsToAdd] = useState([]);
   //const [isLabelsVisible, setIsLabelsVisible] = useState(false);
 
   const {
     isModalOpen,
-    formData: { description, bgColor, hoverBackgroundColor, imgUrl },
+    formData: {
+      description,
+      bgColor,
+      hoverBackgroundColor,
+      imgUrl,
+      labelsToAdd,
+    },
     activeActionModal,
     isImgDeleteBtnVisible,
   } = useSelector((state) => state.noteForm);
@@ -93,7 +100,7 @@ export const NoteForm = () => {
           //setHoverBackgroundColor('#e0e0e0');
           //setIsColorPaletteVisible(false);
           //setIsLabelsVisible(false);
-          setLabelsToAdd([]);
+          //setLabelsToAdd([]);
           //setImgUrl(null);
           imageFileDataRef.current = null;
           //setIsModalOpen(false);
@@ -102,7 +109,7 @@ export const NoteForm = () => {
         //setHoverBackgroundColor('#e0e0e0');
         //setImgUrl(null);
         imageFileDataRef.current = null;
-        setLabelsToAdd([]);
+        //setLabelsToAdd([]);
         //setIsModalOpen(false);
         //setIsColorPaletteVisible(false);
         //setIsLabelsVisible(false);
@@ -162,8 +169,6 @@ export const NoteForm = () => {
     }
   };
 
-  console.log(activeActionModal ? 'modalvisible ahe' : 'modalVisible nai aeh');
-
   const closeColorPalette = () => {
     dispatch(handleActiveActionModal({ activeActionModal: null }));
     //setIsColorPaletteVisible(false);
@@ -218,9 +223,11 @@ export const NoteForm = () => {
       const newLabelsToAdd = labelsToAdd.filter(
         (label) => label._id !== labelId,
       );
-      setLabelsToAdd(newLabelsToAdd);
+      dispatch(handleLabelsForAddition({ labels: newLabelsToAdd }));
+      //setLabelsToAdd(newLabelsToAdd);
     } else {
-      setLabelsToAdd([...labelsToAdd, label]);
+      dispatch(handleLabelsForAddition({ labels: [...labelsToAdd, label] }));
+      //setLabelsToAdd([...labelsToAdd, label]);
     }
   };
 
