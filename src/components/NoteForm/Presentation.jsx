@@ -13,7 +13,7 @@ export const NoteFormPresentation = ({
   handleKeyDown,
   notesActions,
   handleActions,
-  isColorPaletteVisible,
+  //isColorPaletteVisible,
   closeColorPalette,
   bgColor,
   hoverBackgroundColor,
@@ -27,8 +27,9 @@ export const NoteFormPresentation = ({
   handleLabel,
   labelsToAdd,
   handleRemoveLabel,
-  isLabelsVisible,
+  //isLabelsVisible,
   closeLabels,
+  activeActionModal,
 }) => {
   useEffect(() => {
     noteFormDescriptionRef.current.focus();
@@ -88,7 +89,7 @@ export const NoteFormPresentation = ({
             placeholder="Take a note..."
           />
         </div>
-        {isColorPaletteVisible && (
+        {activeActionModal === 'colorPalette' && (
           <ColorPalette
             closeColorPalette={closeColorPalette}
             colorHandler={colorHandler}
@@ -114,7 +115,7 @@ export const NoteFormPresentation = ({
             })}
           </ul>
         )}
-        {isLabelsVisible && (
+        {activeActionModal === 'labels' && (
           <Labels
             handleLabel={handleLabel}
             labelsToAdd={labelsToAdd}
