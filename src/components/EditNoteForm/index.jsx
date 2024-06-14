@@ -13,6 +13,7 @@ import {
   handleActiveActionModal,
   handleColor,
   handleImage,
+  handleLabelsForAddition,
   handleSaveNote,
 } from '../NoteForm/noteFormSlice';
 
@@ -24,14 +25,11 @@ export const EditNoteForm = () => {
   const [deleteNote] = useDeleteNoteMutation();
 
   const {
-    formData: { bgColor, hoverBackgroundColor, imgUrl },
+    formData: { bgColor, hoverBackgroundColor, imgUrl, labelsToAdd },
     activeActionModal,
   } = useSelector((state) => state.noteForm);
 
   const dispatch = useDispatch();
-
-  const [noteLabels, setNoteLabels] = useState([]);
-  const [isLabelsVisible, setIsLabelsVisible] = useState(false);
 
   const noteFormTitleRef = useRef(null);
   const noteFormDescriptionRef = useRef(null);
@@ -49,7 +47,7 @@ export const EditNoteForm = () => {
           hoverBackgroundColor: data.note?.theme?.hoverBackgroundColor,
         }),
       );
-      setNoteLabels(data.note?.labels);
+      dispatch(handleLabelsForAddition({ labels: data.note?.labels }));
       if (data.note?.imageUrl) {
         dispatch(handleImage({ imageUrl: data.note?.imageUrl }));
         imageFileDataRef.current = data.note?.imageUrl;
@@ -68,7 +66,7 @@ export const EditNoteForm = () => {
     const title = noteFormTitleRef.current.value;
     const description = noteFormDescriptionRef.current.value;
     let noteImgUrl = '';
-    const uniqueLablesToAdd = noteLabels.filter((label) => {
+    const uniqueLablesToAdd = labelsToAdd.filter((label) => {
       return !data.note.labels.some((noteLabel) => label._id === noteLabel._id);
     });
     const labels = uniqueLablesToAdd.map((label) => label._id);
@@ -135,7 +133,16 @@ export const EditNoteForm = () => {
 
       case 'addLabel': {
         e.preventDefault();
-        setIsLabelsVisible(true);
+        dispatch(
+          handleActiveActionModal({
+            activeActionModal:
+              activeActionModal === 'colorPalette'
+                ? 'labels'
+                : activeActionModal
+                  ? null
+                  : 'labels',
+          }),
+        );
         break;
       }
     }
@@ -154,45 +161,18 @@ export const EditNoteForm = () => {
     e.target.value = null;
   };
 
-  const handleLabel = (label, labelCheckboxRef) => {
-    const labelId = label._id;
-
-    labelCheckboxRef.current.checked = !labelCheckboxRef.current.checked;
-    const isLabelAlreadyAdded = noteLabels.find(
-      (label) => label._id === labelId,
-    );
-
-    const labelToDelete = data.note.labels.find(
-      (label) => label._id === labelId,
-    );
-
-    if (labelToDelete) {
-      labelsToDeleteRef.current.push(labelId);
-    }
-
-    if (isLabelAlreadyAdded) {
-      const newNoteLabels = noteLabels.filter((label) => label._id !== labelId);
-      setNoteLabels(newNoteLabels);
-    } else {
-      setNoteLabels([...noteLabels, label]);
-    }
-  };
-
   const handleRemoveLabel = (labelId) => {
-    const newNoteLabels = noteLabels.filter((label) => label._id !== labelId);
-    setNoteLabels(newNoteLabels);
-    setIsLabelsVisible(false);
+    const newNoteLabels = labelsToAdd.filter((label) => label._id !== labelId);
+    dispatch(handleLabelsForAddition({ labels: newNoteLabels }));
+    dispatch(handleActiveActionModal({ activeActionModal: null }));
     const labelToDelete = data.note?.labels.find(
       (label) => label._id === labelId,
     );
 
     if (labelToDelete) {
       labelsToDeleteRef.current.push(labelId);
+      console.log('labels', labelsToDeleteRef);
     }
-  };
-
-  const closeLabels = () => {
-    setIsLabelsVisible(false);
   };
 
   if (isLoading) {
@@ -201,24 +181,22 @@ export const EditNoteForm = () => {
 
   return (
     <EditNoteFormPresentation
-      handleKeyDown={handleKeyDown}
-      saveNote={saveNote}
       title={data?.note?.title ?? ''}
       description={data?.note?.description ?? ''}
+      imgUrl={imgUrl}
+      bgColor={bgColor}
+      hoverBackgroundColor={hoverBackgroundColor}
+      labelsToAdd={labelsToAdd}
+      notesActions={NOTES_EDIT_FORM_ACTIONS}
+      activeActionModal={activeActionModal}
+      handleKeyDown={handleKeyDown}
+      saveNote={saveNote}
       noteFormTitleRef={noteFormTitleRef}
       noteFormDescriptionRef={noteFormDescriptionRef}
       handleActions={handleActions}
-      notesActions={NOTES_EDIT_FORM_ACTIONS}
-      bgColor={bgColor}
-      hoverBackgroundColor={hoverBackgroundColor}
-      activeActionModal={activeActionModal}
-      imgUrl={imgUrl}
       imageFileDataRef={imageFileDataRef}
       imageHandler={imageHandler}
-      noteLabels={noteLabels}
-      handleLabel={handleLabel}
-      closeLabels={closeLabels}
-      isLabelsVisible={isLabelsVisible}
+      labelsToDeleteRef={labelsToDeleteRef}
       handleRemoveLabel={handleRemoveLabel}
     />
   );

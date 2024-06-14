@@ -18,10 +18,8 @@ export const EditNoteFormPresentation = ({
   imgUrl,
   imageFileDataRef,
   imageHandler,
-  noteLabels,
-  handleLabel,
-  closeLabels,
-  isLabelsVisible,
+  labelsToAdd,
+  labelsToDeleteRef,
   handleRemoveLabel,
 }) => {
   return (
@@ -54,9 +52,9 @@ export const EditNoteFormPresentation = ({
             placeholder="Take a note..."
           />
         </div>
-        {noteLabels.length > 0 && (
+        {labelsToAdd.length > 0 && (
           <ul className="px-3 flex gap-2 relative z-50">
-            {noteLabels.map((label) => {
+            {labelsToAdd.map((label) => {
               return (
                 <li
                   className="m-0 text-xs bg-[#EBEBEB] px-3 py-1 rounded-xl relative group"
@@ -88,12 +86,8 @@ export const EditNoteFormPresentation = ({
           </button>
         </div>
         {activeActionModal === 'colorPalette' && <ColorPalette />}
-        {isLabelsVisible && (
-          <Labels
-            handleLabel={handleLabel}
-            labelsToAdd={noteLabels}
-            closeLabels={closeLabels}
-          />
+        {activeActionModal === 'labels' && (
+          <Labels labelsToDeleteRef={labelsToDeleteRef} />
         )}
       </div>
     </>

@@ -6,7 +6,7 @@ import {
   handleLabelsForAddition,
 } from '../NoteForm/noteFormSlice';
 
-export const Labels = () => {
+export const Labels = ({ labelsToDeleteRef }) => {
   const { data, isLoading } = useGetLabelsQuery();
 
   const {
@@ -22,6 +22,14 @@ export const Labels = () => {
     const isLabelAlreadyAdded = labelsToAdd.find(
       (label) => label._id === labelId,
     );
+
+    if (labelsToDeleteRef.current) {
+      const labelToDelete = labelsToAdd.find((label) => label._id === labelId);
+
+      if (labelToDelete) {
+        labelsToDeleteRef.current.push(labelId);
+      }
+    }
 
     if (isLabelAlreadyAdded) {
       const newLabelsToAdd = labelsToAdd.filter(

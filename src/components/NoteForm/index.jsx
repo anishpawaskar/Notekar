@@ -172,22 +172,22 @@ export const NoteForm = () => {
 
   return (
     <NoteFormPresentation
-      handleDescriptionChange={handleDescriptionChange}
-      saveNote={saveNote}
       description={description}
-      noteFormTitleRef={noteFormTitleRef}
-      noteFormDescriptionRef={noteFormDescriptionRef}
-      handleKeyDown={handleKeyDown}
-      notesActions={NOTES_FORM_ACTIONS}
-      handleActions={handleActions}
+      imgUrl={imgUrl}
       bgColor={bgColor}
       hoverBackgroundColor={hoverBackgroundColor}
-      imageHandler={imageHandler}
-      imgUrl={imgUrl}
-      imageFileDataRef={imageFileDataRef}
       labelsToAdd={labelsToAdd}
-      handleRemoveLabel={handleRemoveLabel}
+      notesActions={NOTES_FORM_ACTIONS}
       activeActionModal={activeActionModal}
+      handleDescriptionChange={handleDescriptionChange}
+      noteFormTitleRef={noteFormTitleRef}
+      saveNote={saveNote}
+      noteFormDescriptionRef={noteFormDescriptionRef}
+      handleKeyDown={handleKeyDown}
+      handleActions={handleActions}
+      imageHandler={imageHandler}
+      imageFileDataRef={imageFileDataRef}
+      handleRemoveLabel={handleRemoveLabel}
     />
   );
 };
