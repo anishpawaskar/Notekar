@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const BASE_URL = 'https://api-notekar-backend.vercel.app/';
+const BASE_URL = 'http://localhost:3000'; //TODO: put this in env file
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
@@ -90,6 +90,12 @@ export const api = createApi({
     getSelfDetails: builder.query({
       query: () => '/self',
     }),
+    logoutUser: builder.mutation({
+      query: () => ({
+        url: '/auth/sign-out',
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
@@ -106,4 +112,5 @@ export const {
   useRegistersUserMutation,
   useLoginUserMutation,
   useGetSelfDetailsQuery,
+  useLogoutUserMutation,
 } = api;

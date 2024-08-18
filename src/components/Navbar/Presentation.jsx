@@ -12,6 +12,9 @@ export const NavbarPresentation = ({
   handleNavlink,
   isEditLabelsVisible,
   closeEditLabels,
+  toggleModal,
+  handleLogout,
+  isModalOpen,
 }) => {
   return (
     <nav className="flex px-4 py-3 justify-between items-center">
@@ -47,8 +50,18 @@ export const NavbarPresentation = ({
         </button>
       </div>
       {isEditLabelsVisible && <EditLabels closeEditLabels={closeEditLabels} />}
-      <div className="">
+      <div onClick={toggleModal} className="relative">
         <button className="h-9 w-9 rounded-full bg-[--primary-color]">A</button>
+        {isModalOpen && (
+          <div className="flex flex-col shadow-2xl px-2 py-2 absolute left-[-90px] bottom-[-55px]">
+            <button
+              onClick={handleLogout}
+              className="px-8 h-8 border bg-[#f7f7f7] hover:bg-[#8f8f8f] text-base rounded-md active:bg-[#f7f7f7]"
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
